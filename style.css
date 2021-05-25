@@ -48,8 +48,8 @@ body {
 
 .tbl-ticker > tbody > tr > td:first-child {
   text-align: center;
-  font-size: 1.5em;
-  width: 120px;
+  font-size: 2.5em;
+  width: 200px;
   background-color: rgba(0, 0, 0, 0.5);
   border-right: 3px transparent solid;
   border-left: 3px transparent solid;
@@ -57,15 +57,15 @@ body {
 
 .tbl-ticker > tbody > tr > td:nth-child(2) {
   text-align: center;
-  font-size: 1.5em;
-  width: 60px;
+  font-size: 2.5em;
+  width: 120px;
 }
 
 .box {
   width: 100%;
   text-align: right;
-  padding: 20px 60px 0 20px;
-  font-size: 1.5em;
+  padding: 20px 100px 0 20px;
+  font-size: 2.5em;
 }
 
 .box span {
@@ -73,15 +73,15 @@ body {
   align-items: center;
   justify-content: center;
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
-  line-height: 2;
+  line-height: 1.75;
 }
 
 .percent-change {
   width: 100%;
   text-align: right;
-  padding-right: 60px;
+  padding-right: 100px;
   padding-bottom: 20px;
-  font-size: 1em;
+  font-size: 1.5em;
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
 }
 
