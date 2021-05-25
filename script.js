@@ -1,10 +1,12 @@
 /**
  * BTC - bitcoin
- * XCH - chia
+ * ETH - ethereum
+ * XLM - stellar
  * XMR - monero
+ * ZEC - zcash
  */
 
-var cryptoCurrencies = ["bitcoin", "chia", "monero"];
+var cryptoCurrencies = ["chia"];
 
 var cryptoTicker = document.querySelector(".crypto-ticker");
 
@@ -67,8 +69,7 @@ function displauCryptoCurrencies() {
       <div class="${id}-panel panel">
           <table class="tbl-ticker">
               <tr>
-                  <td>
-                  <span>${symbol.toUpperCase()}</span>
+                  <td><img src="https://camo.githubusercontent.com/dac41721271273b9d3b5f2f7f3106d4e2c6125667860681db40c74f77d7e9ca2/68747470733a2f2f7777772e636869612e6e65742f696d672f636869615f6c6f676f2e737667" alt="${name}"> <span>${symbol.toUpperCase()}</span>
                   </td>
                   <td>
                       <i class="fa fa-caret-up dir-up"></i>
