@@ -34,27 +34,11 @@
       <div class="sidebar">
         <!-- insert your sidebar items here -->
         <h3>Latest News</h3>
-        <h4>New Website Launched</h4>
+        <h4>SERVOGRBL is on the way!</h4>
         <h5> September 2021</h5>
         <p>First boards are on order from the manufacturer. Get in touch if you want to be involved in testing!</p>
         <p></p>
-        <! ––<h4>New Website Launched</h4>
-        <h5>July 1st, 2014</h5>
-        <p>2014 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
-        <h3>Useful Links</h3>
-        <ul>
-          <li><a href="#">link 1</a></li>
-          <li><a href="#">link 2</a></li>
-          <li><a href="#">link 3</a></li>
-          <li><a href="#">link 4</a></li>
-        </ul>
-        <h3>Search</h3>
-        <form method="post" action="#" id="search_form">
-          <p>
-            <input class="search" type="text" name="search_field" value="Enter keywords....." />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/search.png" alt="Search" title="Search" />
-          </p>
-        </form> -->
+        
       </div>
       <div id="content">
         <!-- insert the page content here -->
@@ -66,12 +50,15 @@
         <p></p>
         <p></p>
         <p></p>
-        <h2>Why use Servos instead of Stepper Motors?</h2>
-        <p>There are various reasons why servos might be an interesting choice over steppers:</p>
+        <h2>Build notes:</h2>
+        <p></p>
         <ul>
-          <li>Cheaper</li><p>High torque brushed DC motors can be cheap, especially when recycled/reclaimed from machinery and automotive parts</p>
-          <li>Better torque</li>
-          <li>No lost steps- closed loop postional feedback</li><p>While stepper controllers deliver a list of commands and blindly expect the motors to keep up, a closed loop servo system listens to positional information from its sensors and always knows where its cutter head is in space. Servo systems do not suffer from errors due to 'lost' steps. </p>
+          <li>Pro Mini header pins</li><p>Use downward-pointing header pins on all pins of the Pro Minis, rather than the 90 degree headers usually provided</p>
+          <li>Flashing Pro Minis</li><Uploading the sketch to the Pro Minis must be done prior to installation using a  USB-to-TTL serial converter to upoload the sketch. The "Uno" version of DCSERVO should be used for the Pro Minis.</p>
+          <li>H-Bridges</li><p>H-bridges are used to drive the motors. Initial tests will be performed using 3x "IBT 2" modules (dual BTS7960). A note on these units: be sure to remove the heatsink and apply a good layer of thermal paste before re-attaching. The paste transfers heat through the PCB vias to the heatsink which is on the opposite side of the board to the chip. The paste needs to squeeze out through the vias on the other side behind the legs and along the top edge of the package. Thermal paste which dries hard will be best for this.
+
+ </p>
+          <li>Power</li><p>The board requires an external 5v power supply as none is included onboard. Power consumption is probably around 30mA. A power switch is provided for the ESP32 as the 5V supply must be disconnected when using USB to prevent overpowering the board. A separate supply is also required for the motor voltage to the H-bridges eg. 24V.</p>
         </ul>
       </div>
     </div>
