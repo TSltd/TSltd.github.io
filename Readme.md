@@ -6,7 +6,7 @@ It uses 3 Arduino Pro Minis in place of stepper drivers to convert STEP/DIR sign
 
 H-bridges are used to drive the motors. Initial tests will be performed using 3x "IBT 2" modules (dual BTS7960). A note on these units: be sure to remove the heatsink and apply a good layer of thermal paste before re-attaching. The paste transfers heat through the PCB vias to the heatsink which is on the opposite side of the board to the chip. The paste needs to squeeze out through the vias on the other side behind the legs and along the top edge of the package. Thermal paste which dries hard will be best for this.
 
-The board requires an external 5v power supply as none is included onboard.
+The board requires an external 5v power supply as none is included onboard. Power consumption is probably around 30mA. A separate supply is also required for the motor voltage eg.24V.
 
 The Pro-Minis need to be flashed before attaching using a USB-to-TTL serial converter to upoload the sketch.
 
