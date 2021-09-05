@@ -8,7 +8,7 @@ H-bridges are used to drive the motors. Initial tests will be performed using 3x
 
 The board requires an external 5v power supply as none is included onboard. Power consumption is probably around 30mA. A separate supply is also required for the motor voltage to the H-bridges eg. 24V.
 
-The Pro-Minis need to be flashed before attaching using a USB-to-TTL serial converter to upoload the sketch.
+The Pro-Minis need to be flashed before attaching using a USB-to-TTL serial converter to upoload the sketch. The "Uno" version of DCSERVO should be used for the Pro Minis.
 
 A power switch is provided for the ESP32 to allow the 5V supply to be disconnected to prevent overpowering the board when using USB.
 
