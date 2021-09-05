@@ -14,10 +14,10 @@ A power switch is provided for the ESP32 to allow the 5V supply to be disconnect
 
 This board builds on the incredible work of [Bart Dring (GRBL_ESP32)](https://github.com/bdring) and [Miguel Sanchez (DCSERVO)](https://github.com/misan), to whom credit for its function is due.
 
-![image](/TSltd/TSltd.github.io/blob/main/servogrbl_board.jpg)
+![image](/blob/main/servogrbl_board.jpg)
 
 
-![image](/TSltd/TSltd.github.io/blob/main/servogrbl_schematic.jpg)
+![image](/blob/main/servogrbl_schematic.jpg)
 
 
 The schematic for this board is open source. If you would like to be a beta tester for this board please contact me: dan@timberstar.co.uk
