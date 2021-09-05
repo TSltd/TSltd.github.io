@@ -17,7 +17,7 @@ This board builds on the incredible work of [Bart Dring (GRBL_ESP32)](https://gi
 ![image](https://github.com/TSltd/TSltd.github.io/blob/main/servogrbl_board.jpg)
 
 
-![image](/blob/main/servogrbl_schematic.jpg)
+![image](https://github.com/TSltd/TSltd.github.io/blob/main/servogrbl_schematic.jpg)
 
 
 The schematic for this board is open source. If you would like to be a beta tester for this board please contact me: dan@timberstar.co.uk
