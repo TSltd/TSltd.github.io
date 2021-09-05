@@ -2,7 +2,7 @@
 
 SERVOGRBL is a breakout board for the ESP32 DEVKITC to allow GRBL control of a 3 axis CNC machine using DC motors as servos instead of stepper motors. Currently it is in the first prototype itteration, version 0.1.
 
-It uses 3 Arduino Pro Minis in place of stepper drivers to convert STEP/DIR signals into PWM with sensor feedback on each channel. 
+It uses 3 Arduino Pro Minis in place of stepper drivers to convert STEP/DIR signals into PWM with sensor feedback on each channel. Note that downward-pointing pin headers should be used on all the pins of the Pro Minis, don't use the 90 degree headers usually provided.
 
 H-bridges are used to drive the motors. Initial tests will be performed using 3x "IBT 2" modules (dual BTS7960). A note on these units: be sure to remove the heatsink and apply a good layer of thermal paste before re-attaching. The paste transfers heat through the PCB vias to the heatsink which is on the opposite side of the board to the chip. The paste needs to squeeze out through the vias on the other side behind the legs and along the top edge of the package. Thermal paste which dries hard will be best for this.
 
