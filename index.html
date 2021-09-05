@@ -15,7 +15,7 @@
       <div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">black<span class="logo_colour">_white</span></a></h1>
+          <h1><a href="index.html">SERVO<span class="logo_colour">GRBL</span></a></h1>
           <h2>A breakout board for GRBL_ESP32 and Misan DCSERVO</h2>
         </div>
       </div>
@@ -58,8 +58,20 @@
       </div>
       <div id="content">
         <!-- insert the page content here -->
-        <h1>Welcome to the black_white template</h1>
-        <p>This standards compliant, simple, fixed width website template is released as an 'open source' design (under a <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 Licence</a>), which means that you are free to download and use it for anything you want (including modifying and amending it). All I ask is that you leave the 'design from HTML5webtemplates.co.uk' link in the footer of the template, but other than that...</p>
+        <h1>A servo-based CNC breakout board for the ESP32 DEVKITC (NodeMCU ESP32)</h1>
+        <p>SERVOGRBL is a breakout board for the ESP32 DEVKITC to allow GRBL control of a 3 axis CNC machine using DC motors as servos instead of stepper motors. Currently it is in the first prototype itteration, version 0.1.
+
+It uses 3 Arduino Pro Minis in place of stepper drivers to convert STEP/DIR signals into PWM with sensor feedback on each channel. Note that downward-pointing pin headers should be used on all the pins of the Pro Minis, don’t use the 90 degree headers usually provided.
+
+H-bridges are used to drive the motors. Initial tests will be performed using 3x “IBT 2” modules (dual BTS7960). A note on these units: be sure to remove the heatsink and apply a good layer of thermal paste before re-attaching. The paste transfers heat through the PCB vias to the heatsink which is on the opposite side of the board to the chip. The paste needs to squeeze out through the vias on the other side behind the legs and along the top edge of the package. Thermal paste which dries hard will be best for this.
+
+The board requires an external 5v power supply as none is included onboard. Power consumption is probably around 30mA. A separate supply is also required for the motor voltage to the H-bridges eg. 24V.
+
+The Pro-Minis need to be flashed before attaching using a USB-to-TTL serial converter to upoload the sketch.
+
+A power switch is provided for the ESP32 to allow the 5V supply to be disconnected to prevent overpowering the board when using USB.
+
+This board builds on the incredible work of Bart Dring (GRBL_ESP32) and Miguel Sanchez (DCSERVO), to whom credit for its function is due.</p>
         <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be validated using the links in the footer.</p>
         <p>You can view more free HTML5 web templates <a href="http://www.html5webtemplates.co.uk">here</a>.</p>
         <p>This template is a fully functional 5 page website, with an <a href="examples.html">examples</a> page that gives examples of all the styles available with this design.</p>
