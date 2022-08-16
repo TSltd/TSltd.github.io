@@ -1,6 +1,6 @@
 # AC Zero Cross Detector Module for DIN rail mounting
 
-![image](https://github.com/TSltd/TSltd.github.io/blob/main/render4.jpg)
+![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/render4.jpg)
 
 ### Description
 
