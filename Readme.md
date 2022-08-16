@@ -19,6 +19,8 @@ This module adds to the growing number of DIN rail based accessories for micro-c
 
 ![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/render6.JPG)
 
+![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/board_view_tall.JPG)
+
 
 CAUTION- This circuit uses mains AC voltage which is hazardous and can cause ELECTRIC SHOCK or FIRE. It must be independently reviewed and certified by a qualified professional before use. The designer accepts no responsibility for assembly or use of this module in any way.
 
