@@ -17,7 +17,6 @@ The board features a micro-LED indicator and is designed fit into a [Camdenboss 
 
 This module adds to the growing number of DIN rail based accessories for micro-controller projects, enabling a 'plug and play' approach to speed up project-building.
 
-![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/render6.JPG)
 
 ![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/board_view_tall.jpg)
 
