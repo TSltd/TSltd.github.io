@@ -1,29 +1,29 @@
-# SERVOGRBL
-
-SERVOGRBL is a breakout board for the ESP32 DEVKITC to allow GRBL control of a 3 axis CNC machine using DC motors as servos instead of stepper motors. Currently it is in the first prototype itteration, version 0.1.
-
-It uses 3 Arduino Pro Minis in place of stepper drivers to convert STEP/DIR signals into PWM with sensor feedback on each channel. Note that downward-pointing pin headers should be used on all the pins of the Pro Minis, don't use the 90 degree headers usually provided.
-
-H-bridges are used to drive the motors. Initial tests will be performed using 3x "IBT 2" modules (dual BTS7960). A note on these units: be sure to remove the heatsink and apply a good layer of thermal paste before re-attaching. The paste transfers heat through the PCB vias to the heatsink which is on the opposite side of the board to the chip. The paste needs to squeeze out through the vias on the other side behind the legs and along the top edge of the package. Thermal paste which dries hard will be best for this.
-
-The board requires an external 5v power supply as none is included onboard. Power consumption is probably around 30mA. A separate supply is also required for the motor voltage to the H-bridges eg. 24V.
-
-The Pro-Minis need to be flashed before attaching using a USB-to-TTL serial converter to upoload the sketch. The "Uno" version of DCSERVO should be used for the Pro Minis.
-
-A power switch is provided for the ESP32 to allow the 5V supply to be disconnected to prevent overpowering the board when using USB.
-
-This board builds on the incredible work of [Bart Dring (GRBL_ESP32)](https://github.com/bdring) and [Miguel Sanchez (DCSERVO)](https://github.com/misan), to whom credit for its function is due.
+# AC Zero Cross Detector Module for DIN rail mounting
 
 ![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/schematic)
+
+Description
+110/220VAC Opto-Isolated Zero Cross Detector Module for DIN Rail Carrier Mount with 3.3V or 5V Output - Ideal for Arduino, ESP32/ESP8266
+This module detects the zero cross point of an AC supply and outputs a 3.3V or 5V square wave signal pulse of 1ms every time the zero point is crossed. For a 50Hz supply this pulse would be sent 100 times per second. This is ideal for micro-controller projects which require accurate synchronization with the AC supply, such as for controlling triacs to perform phase-angle control for light dimming or heater control. The AC side of the circuit is optically isolated from the DC side, providing important safety and protection for the micro-controller.
+
+![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/schematic)
+
+The AC supply is connected to the upper terminal block, and the lower terminal block is connected to the micro-controller, sharing its DC 3.3V or 5V and ground, and sending the output signal to a designated GPIO pin to trigger an interrupt in the code.
+
+The board features a micro-LED indicator and is designed fit into a Camdenboss DIN rail enclosure for easy mounting.
+
+This module adds to the growing number of DIN rail based accessories for micro-controller projects, enabling a 'plug and play' approach to speed up project-building.
+
+
+CAUTION- This circuit uses mains AC voltage which is hazardous and can cause ELECTRIC SHOCK or FIRE. It must be independently reviewed and certified by a qualified professional before use. The designer accepts no responsibility for assembly or use of this module in any way.
+
+
 
 
 ![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/schematic.jpg)
 
 
-The schematic for this board is open source. If you would like to be a beta tester for this board please contact me: dan@timberstar.co.uk
 
-## Build Log
 
-05/09/2021 Initial commit. Ordered test boards from JLCPCB. Version 0.1 schematic and 3d render uploaded.
 
 
