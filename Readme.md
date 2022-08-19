@@ -10,7 +10,7 @@
 This module detects the zero cross point of an AC supply and outputs a 3.3V or 5V square wave signal pulse of 1ms every time the zero point is crossed. For a 50Hz supply this pulse would be sent 100 times per second. This is ideal for micro-controller projects which require accurate synchronization with the AC supply, such as for controlling triacs to perform phase-angle control for light dimming or heater control. The AC side of the circuit is optically isolated from the DC side, providing important safety and protection for the micro-controller.
 
 ![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/render7cropped.jpg)
-![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/render7.JPG)
+
 
 The AC supply is connected to the upper terminal block, and the lower terminal block is connected to the micro-controller, sharing its DC 3.3V or 5V and ground, and sending the output signal to a designated GPIO pin to trigger an interrupt in the code.
 
@@ -27,7 +27,7 @@ CAUTION- This circuit uses mains AC voltage which is hazardous and can cause ELE
 ### Schematic diagram
 
 
-![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/schematic.jpg)
+![image](https://github.com/TSltd/TSltd.github.io/blob/main/images/schematic1.jpg)
 
 
 
