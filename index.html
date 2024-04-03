@@ -109,8 +109,7 @@
         <p>In the controller code (C++), the patterns used to control ON and Off switching are represented as "bitsets"- arrays of a fixed length which contain boolean values "1" or "0", stored in memory as individual bits. There is one bitset to control each channel.</p>
     <p>Using a random number generator, a proportional number of ON and OFF cycles, represented by "1"s and "0"s, is distributed in each bitset, representing a relay pattern over a given timeframe.</p>
     <pre>
-      <code>
- 1010000011011101001011011101101111110110101011111110111101101011011011011000001011100001011010110110
+      <code>1010000011011101001011011101101111110110101011111110111101101011011011011000001011100001011010110110
 </code>
     </pre>
         <p>By iterating through the bits of the bitset incrementally and writing their contents to an output pin, the pattern can control the relay to modulate the AC supply. Controlling the number of ON cycles will modulate the current delivered over the given time period in a randomized manner. When the increment counter reaches its maximum, at the end of the bitsets, it resets to zero and a new set of bitsets is generated, based on the updated value of the current desired power levels for each channel.</p>
@@ -122,12 +121,12 @@
     <h4 id="generate-bitsets">1) Generate bitsets</h4>
     <p>First, the bitset for each channel is populated incrementally with ones proportional to the desired power level. For example, with a given bitset length of 100, a bitset with a power level of 30% would contain 30 ones followed by 70 zeros:</p>
     <pre>
-      <code>    1111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000000000
+    <code>1111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000000000
 </code>
     </pre>
     <p>Based on user inputs, the bitset generator populates bitsets for each channel, for example 10%, 30%, 60%, 90%:</p>
     <pre>
-      <code>Populated Bitsets:
+    <code>Populated Bitsets:
 Ch 0 10/100 1111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 Ch 1 30/100 1111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000000000
 Ch 2 60/100 1111111111111111111111111111111111111111111111111111111111110000000000000000000000000000000000000000
@@ -137,7 +136,7 @@ Ch 3 90/100 11111111111111111111111111111111111111111111111111111111111111111111
     <h4 id="rotate-bitsets">2) Rotate bitsets</h4>
     <p>Then each bitset is rotated based on the cumulative sum of the power level of the previous channels, so that the ON period of each channel starts at the moment after the previous one. This gives the minimum overall intersection of ON cycles across the channels. Even though the rotated ON periods wrap around and may then coincide with other channels, the overall result still represents the best possible optimization to minimise intersection over the total time period, in other words with the least possible number of coincident ones at any given time. The bit shifting operation runs on each channel sequentially:</p>
     <pre>
-      <code>Bitsets optimized for minimal intersection:
+    <code>Bitsets optimized for minimal intersection:
 Ch 0 10/100 1111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 Ch 1 30/100 0000000000111111111111111111111111111111000000000000000000000000000000000000000000000000000000000000
 Ch 2 60/100 0000000000000000000000000000000000000000111111111111111111111111111111111111111111111111111111111111
