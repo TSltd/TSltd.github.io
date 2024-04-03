@@ -41,7 +41,7 @@
         @media screen and (max-width: 600px) {
             /* Adjustments for mobile devices */
             .container {
-                padding: 10px;
+                padding: 5px;
             }
 
             code {
@@ -109,7 +109,7 @@
     <p>Using a random number generator, a proportional number of ON and OFF cycles, represented by "1"s and "0"s, is distributed in each bitset, representing a relay pattern over a given timeframe.</p>
     <pre>
       <code>
-1010000011011101001011011101101111110110101011111110111101101011011011011000001011100001011010110110
+    1010000011011101001011011101101111110110101011111110111101101011011011011000001011100001011010110110
 </code>
     </pre>
         <p>By iterating through the bits of the bitset incrementally and writing their contents to an output pin, the pattern can control the relay to modulate the AC supply. Controlling the number of ON cycles will modulate the current delivered over the given time period in a randomized manner. When the increment counter reaches its maximum, at the end of the bitsets, it resets to zero and a new set of bitsets is generated, based on the updated value of the current desired power levels for each channel.</p>
