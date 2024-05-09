@@ -152,7 +152,8 @@ Ch 3 90/100 01111111111101111111111011111100110110111111111001111101111111111111
     <h2 id="implementation-with-esp32">4) Implementation with ESP32</h2>
     <p>To achieve the goal of minimal EMF generation, switching of the AC supply must take place as close as possible to the zero cross point. The synchronization is achieved using a zero cross detector which monitors the AC supply and delivers a short pulse to the microcontroller every time a zero cross is detected. The microcontroller must then set the pin state of the output pins as quickly as possible.</p>
     <p>The ESP32 microcontroller was chosen for its low cost, popularity, speed and dual cores. To achieve high speed responses, the proposed code uses FreeRTOS realtime task handling and maximizes the response speed by running the pulse detection function exclusively on the second core. Rather than detecting pulses with an interrupt which can be slow, the code uses brute-force polling at around 333kHz, giving a reliable response time of 3 microseconds. Switching a relay with such a fast response would limit the switching voltage to below 1V on a 220V AC supply, resulting in ultra low EMF generation. Using bit-level control minimizes memory requirements and further optimizes speed -the regeneration and random shuffling of the bitsets is fast enough that it barely affects the response time each time the bitsets are updated, with a maximum recorded response time of 6 microseconds, and with serial debug prints disabled, this would be expected to be lower.</p>
-  <h2> Zero-cross detection:</h2>
+    <p><img src="./images/results.gif" class="center" width="600" height="auto" alt="image"></p>
+        <h2> Zero-cross detection:</h2>
         <p>The project requires accurate zero-cross detection of the mains supply, so a custom zero-cross detection module is in development/testing:</p>
         <p><img src="https://pcbwayfile.s3.us-west-2.amazonaws.com/web/24/05/10/0024404907310.jpg" alt="Zero Cross Detector" width="600" class="center"></p>
         <p><img src="https://pcbwayfile.s3.us-west-2.amazonaws.com/web/24/05/10/0024499818658.jpg" alt="PCB from PCBWay" width="600" class="center"></p>
@@ -165,9 +166,9 @@ Ch 3 90/100 01111111111101111111111011111100110110111111111001111101111111111111
         <p>The user will have access to "infitnite" adjustment of the PID gains for each channel to allow fine tuning for any system:
         <p><img src="./images/pidgainz.jpg" alt="PID Gains" width="600" class="center"></p>
         <h2 id="results-and-next-steps">5) Current project status</h2>
-    <p><img src="./images/results.gif" class="center" width="600" height="auto" alt="image"></p>
+    
         <hr />
-    <p>Currently the project is developing in several distinct areas:</p>p>
+    <p>Currently the project is developing in several distinct areas:</p>
         <p>The backed code successfully modulates the output state of 4 channels, demonstrated with LEDs in place of relays. The user can input new power levels via serial which will update as the cycle is reset. It has an inbuilt pulse generator which can be toggled via serial, generating a pulse on an output pin which can be connected to the detector input to simulate the AC supply. The code has also been successfully tested using an external function generator pulse at 50Hz. The immediate next step will be to test it with a real zero cross detector on an AC supply, controlling 4 relays.</p>
         <p>The frontend code for the UI successfully graphs temperature readings from the 4 channels, allows the user to adjust set temps and PIDs, and communicates data effectively with the ESP32.</p>
         <p>The zero-cross detector is in its second itteration awaiting further testing for improved pulsewidth.</p>
