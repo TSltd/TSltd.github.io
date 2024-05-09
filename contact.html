@@ -1,48 +1,76 @@
-<!DOCTYPE HTML>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>SERVOGRBL - Contact</title>
-  <meta name="description" content="website description" />
-  <meta name="keywords" content="website keywords, website keywords" />
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <style>
+        body {
+            font-family: Times, serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
 
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+            word-wrap: break-word;
+            font-size: 12px;
+            background-color: white;
+            color: black;
+            padding: 0px;
+            line-height: 2;
+            display: block;
+            overflow-x: auto;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+            height: auto;
+        }
+        h1 {
+  text-align: center;
+  margin: 35px 0 20px 0 !important;
+}
+
+    </style>
+</head>
 <body>
-  <div id="main">
-    <div id="header">
-      <div id="logo">
-        <div id="logo_text">
-          <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">SERVO<span class="logo_colour">GRBL</span></a></h1>
-          <h2>Servo control for CNC</h2>
+    <div class="container">
+        
+    <h1 id="contact">Contact</h1>
+    <h2 id="for-ac-heaters">
+      <em>Get in touch...</em>
+
+  <form target="_blank" action="https://formsubmit.co/dan@timberstar.co.uk" method="POST">
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col">
+          <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+        </div>
+        <div class="col">
+          <input type="email" name="email" class="form-control" placeholder="Email Address" required>
         </div>
       </div>
-      <div id="menubar">
-        <ul id="menu">
-          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-          <li><a href="index.html">Home</a></li>
+    </div>
+    <div class="form-group">
+      <textarea placeholder="Your Message" class="form-control" name="message" rows="10" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-lg btn-dark btn-block">Submit</button>
+  </form>
   
-          <li><a href="schematic.html">Schematic</a></li>
-        
-          <li class="selected"><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div id="site_content">
-      <div class="sidebar">
-       
-      </div>
-      <div id="content">
-        <!-- insert the page content here -->
-        <h1>Get in touch!</h1>
-        <p>SERVOGRBL boards are not yet available for sale, but a limited number are available FREE to anyone interested in becoming a tester</p>
-        <p>To find out more please email: dan@timberstar.co.uk
-        
-    </div>
-    <div id="footer">
-     TSTAR </div>
-  </div>
-</body>
+  </body>
 </html>
