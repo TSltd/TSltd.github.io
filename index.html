@@ -170,9 +170,10 @@ Ch 3 90/100 01111111111101111111111011111100110110111111111001111101111111111111
     <p>Currently the project is developing in several distinct areas:</p>
         <p>The backend code successfully modulates the output state of 4 channels, demonstrated with LEDs in place of relays. The user can input new power levels via serial which will update as the cycle is reset. It has an inbuilt pulse generator which can be toggled via serial, generating a pulse on an output pin which can be connected to the detector input to simulate the AC supply. The code has also been successfully tested using an external function generator pulse at 50Hz. The immediate next step will be to test it with a real zero cross detector on an AC supply, controlling 4 relays.</p>
         <p>The frontend code for the UI successfully graphs temperature readings from the 4 channels, allows the user to adjust set temps and PIDs, and communicates data effectively with the ESP32.</p>
-        <p>The zero-cross detector is in its second itteration awaiting further testing for improved pulsewidth.</p>
+        <p>The zero-cross detector is in its third iteration awaiting further testing.</p>
         <p>Current priorities are some refactoring of the javascript, and then the next step will be integration of the frontend and backend components.</p>
-        <p>There can be many further adaptations additions to the webserver to improve functionality.</p>
+        <p>A more refined approach will be necessary for polling the interrupt pins, detecting both rising and falling edges to determine the exact centre of the zero cross. The PCNT hardware interrupt timer peripheral will be ideal for this.</p>
+        <p>There can be many further adaptations and additions to the webserver to improve functionality.</p>
     <hr />
     <p>D Shirley 02/04/2024 Last updated 20/05/2024</p>
         <form action="./contact.html">
