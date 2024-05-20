@@ -160,7 +160,7 @@ Ch 3 90/100 01111111111101111111111011111100110110111111111001111101111111111111
         <hr />
           <h2> Webserver User Interface:</h2>
         <p>The user will need to be able to give input to control the heaters and PIDs, and see realtime output of the temperatures and settings. A local webserver is an ideal choice, allowing complete access to all parameters and data via websockets</p>
-        <p>The webserver UI in development shows a graph of the current temperatures in real time, along with the set temperatures for each channel which can be adjusted by sliders:</p>
+        <p>The webserver in development will be served directly from the ESP32 filesystem. The UI shows a live graph of the current temperatures in real time, along with the set temperatures for each channel which can be adjusted by sliders:</p>
         <p><img src="./images/mainscreen.jpg" alt="PID Gains" width="600" class="center"></p>
         <p>The user will have access to "infinite" adjustment of the PID gains for each channel to allow fine tuning for any system:
         <p><img src="./images/pidgainz.jpg" alt="PID Gains" width="600" class="center"></p>
