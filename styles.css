@@ -2,8 +2,8 @@ body {
     font-family: 'Helvetica', sans-serif;
     background-color: #f4f4f9;
     color: #333;
-    margin: 40px;
-    padding: 20px;
+    margin: 0; /* Adjusted margin */
+    padding: 0; /* Adjusted padding */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,10 +12,8 @@ body {
 
 .container {
     text-align: center;
-    
     background-color: #fff;
-    padding: 100px;
-    padding-top: 50px;
+    padding: 40px; /* Adjusted padding */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -23,22 +21,21 @@ body {
 h1 {
     font-family: 'Raveparty Narrow', sans-serif;
     color: #1c3a58;
-    font-size: 20vh;
+    font-size: 10vh; /* Adjusted font-size */
     margin-bottom: 0px;
 }
-
 
 h2 {
     font-family: 'Helvetica', sans-serif;
     color: #1c3a58;
     font-size: 5vh;
-    margin-top: 0px; 
+    margin-top: 10px; /* Adjusted margin */
     padding-top: 0;
 }
 
 p {
     color: #1c3a58;
-    font-size: 4vh;
+    font-size: 3vh; /* Adjusted font-size */
 }
 
 img {
@@ -51,7 +48,75 @@ img {
 video {
     max-width: 100%;
     height: auto;
-    margin-top: 20px;
+    margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
+.button-link {
+    display: inline-block; /* Ensure the anchor acts as a block element */
+    margin: 20px auto; /* Centers the button horizontally */
+}
+.button-71 {
+    background-color: #1c3a58;
+    ;
+    border: 0;
+    border-radius: 56px;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    outline: 0;
+    padding: 16px 21px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+   
+    
+}
+
+.button-71:before {
+    background-color: initial;
+    background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+    border-radius: 125px;
+    content: "";
+    height: 50%;
+    left: 4%;
+    opacity: .5;
+    position: absolute;
+    top: 0;
+    transition: all .3s;
+    width: 92%;
+}
+
+.button-71:hover {
+    box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+    transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+    .button-71 {
+        padding: 16px 48px;
+    }
+}
+
+
+.graph-images {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.graph-images img {
+    height: 200px; /* Set the desired height */
+    width: auto;
+    object-fit: contain;
+    border-radius: 8px;
 }
