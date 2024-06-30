@@ -1,0 +1,57 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 40px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+.container {
+    text-align: center;
+    
+    background-color: #fff;
+    padding: 100px;
+    padding-top: 500px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-family: 'Raveparty Narrow', sans-serif;
+    color: #1c3a58;
+    font-size: 20vh;
+    margin-bottom: 0px;
+}
+
+
+h2 {
+    font-family: 'Helvetica', sans-serif;
+    color: #1c3a58;
+    font-size: 5vh;
+    margin-top: 0px; 
+    padding-top: 0;
+}
+
+p {
+    color: #1c3a58;
+    font-size: 4vh;
+}
+
+img {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+video {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
