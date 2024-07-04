@@ -19,58 +19,178 @@
     </nav>
     <main>
         <h2>Zero Cross Detection - Animated Visualization</h2>
-        <div class="video-container">
-            <div class="chart-label">Input: AC Power Supply</div>
-            <svg class="ac-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
-                <defs>
-                    <path id="sineWave" d="M0,150 Q125,350 250,150 T500,150" />
-                </defs>
-                <line x1="0" y1="150" x2="1000" y2="150" stroke="#4a90e2" stroke-width="2" />
-                <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
-                <use xlink:href="#sineWave" x="0" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-                    <animate attributeName="x" from="0" to="-500" dur="4s" repeatCount="indefinite" />
-                </use>
-                <use xlink:href="#sineWave" x="500" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-                    <animate attributeName="x" from="500" to="0" dur="4s" repeatCount="indefinite" />
-                </use>
-                <use xlink:href="#sineWave" x="1000" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-                    <animate attributeName="x" from="1000" to="500" dur="4s" repeatCount="indefinite" />
-                </use>
-            </svg>
-            <div class="zero-cross-point"></div>
-        </div>
-        <div class="video-container">
-            <div class="chart-label">Output: DC Digital Signal</div>
-            <svg class="square-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
-                <defs>
-                    <path id="squareWave" d="M-250,75 L-250,225 L0,225 L0,75 L250,75 L250,225 L500,225 L500,75 L750,75 L750,225 L1000,225 L1000,75 L1250,75 L1250,225" />
-                </defs>
-                <line x1="0" y1="225" x2="1000" y2="225" stroke="#4a90e2" stroke-width="2" />
-                <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
-                <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
-                    <animate attributeName="x" from="0" to="-500" dur="4s" repeatCount="indefinite" />
-                </use>
-                <use xlink:href="#squareWave" x="500" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
-                    <animate attributeName="x" from="500" to="0" dur="4s" repeatCount="indefinite" />
-                </use>
-                <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
-                    <animate attributeName="x" from="1000" to="500" dur="4s" repeatCount="indefinite" />
-                </use>
-            </svg>
-            <div class="digital-output-indicator"></div>
-            <div class="digital-output-label">Digital Output</div>
-        </div>
-        <div class="offset-controls">
-            <button class="offset-button">Offset -100ms</button>
-            <button class="offset-button">Offset -50ms</button>
-            <button class="offset-button">Offset 0ms</button>
-            <button class="offset-button">Offset +50ms</button>
-            <button class="offset-button">Offset +100ms</button>
-        </div>
-        <div class="offset-area"></div>
-    </main>
-    <footer>
-        <p>&copy; 2023 SynchroPoint. All rights reserved. | <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | <a href="https://synchropoint.co.uk/terms">Terms of Service</a></p>
-    </footer>
-</body>
-</html>
+       <div class="video-container">
+      <div class="chart-label">Input: AC Power Supply</div>
+      <svg class="ac-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
+        <defs>
+          <path id="sineWave" d="M0,150 Q125,350 250,150 T500,150" />
+        </defs>
+        <line x1="0" y1="150" x2="1000" y2="150" stroke="#4a90e2" stroke-width="2" />
+        <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
+        <use xlink:href="#sineWave" x="0" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+          <animate attributeName="x" from="0" to="-500" dur="4s" repeatCount="indefinite" />
+        </use>
+        <use xlink:href="#sineWave" x="500" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+          <animate attributeName="x" from="500" to="0" dur="4s" repeatCount="indefinite" />
+        </use>
+        <use xlink:href="#sineWave" x="1000" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+          <animate attributeName="x" from="1000" to="500" dur="4s" repeatCount="indefinite" />
+        </use>
+      </svg>
+      <div class="zero-cross-point"></div>
+    </div>
+
+    <div class="video-container">
+      <div class="chart-label">Output: DC Digital Signal</div>
+      <svg class="square-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
+        <defs>
+          <path id="squareWave" d="M-250,75 L-250,225 L0,225 L0,75 L250,75 L250,225 L500,225 L500,75 L750,75 L750,225 L1000,225 L1000,75 L1250,75 L1250,225" />
+        </defs>
+        <line x1="0" y1="225" x2="1000" y2="225" stroke="#4a90e2" stroke-width="2" />
+        <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
+        <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
+          <animate id="squareWaveAnim" attributeName="x" from="0" to="-1000" dur="8s" repeatCount="indefinite" />
+        </use>
+        <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
+          <animate id="squareWaveAnim2" attributeName="x" from="1000" to="0" dur="8s" repeatCount="indefinite" />
+        </use>
+      </svg>
+      <div class="digital-output-indicator"></div>
+      <div class="digital-output-label">OFF</div>
+      <div class="offset-area"></div>
+    </div>
+
+    <div class="offset-controls">
+      <button class="offset-button" data-offset="-480">-480µs</button>
+      <button class="offset-button" data-offset="-200">-200µs</button>
+      <button class="offset-button" data-offset="200">+200µs</button>
+    </div>
+
+    <div class="video-description">
+      <h2>Understanding Zero-Crossing Detection</h2>
+      <p>This demonstration shows a visualization of zero-crossing detection. </p>
+      <p>In these graphs:</p>
+      <ul>
+        <li>AC Power Supply: the red indicator appears when the the zero crossing is detected.</li>
+          <li>DC Digital Signal: the red indicator shows when the signal value is high (ON state), and disappears when the signal value is low (OFF state).</li>
+            <li>The effect of different offsets on the timing of the digital output can be observed by toggling the buttons.</li>
+      </ul>
+   
+    </div>
+
+  </main>
+  <footer>
+    <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
+    <p>
+      <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
+      <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
+    </p>
+  </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  const zeroCrossDot = document.querySelector('.zero-cross-point');
+  const digitalOutputDot = document.querySelector('.digital-output-indicator');
+  const digitalOutputLabel = document.querySelector('.digital-output-label');
+  const squareWaveAnims = document.querySelectorAll('#squareWaveAnim, #squareWaveAnim2');
+  const offsetButtons = document.querySelectorAll('.offset-button');
+  const offsetArea = document.querySelector('.offset-area');
+  const animationDuration = 4000; // 4000ms for 50Hz slowed down to 5%
+  const peakAmplitude = 75; // Half of the 150px vertical range
+  const thresholdPercentage = 0.15; // 10% of peak amplitude
+
+  function showZeroCrossDot() {
+    zeroCrossDot.style.opacity = '1';
+  }
+
+  function hideZeroCrossDot() {
+    zeroCrossDot.style.opacity = '0';
+  }
+
+  function updateDigitalOutput(isHigh) {
+    digitalOutputDot.style.opacity = isHigh ? '1' : '0';
+    digitalOutputLabel.textContent = isHigh ? 'ON' : 'OFF';
+  }
+
+  function calculateSineValue(t) {
+    return Math.sin(2 * Math.PI * t);
+  }
+
+  // Calculate the exact timing for zero crossings and digital output changes
+  const crossingInterval = animationDuration / 2; // Two crossings per cycle
+  let startTime = Date.now();
+  let currentOffset = 0;
+
+  function checkStates() {
+    const elapsed = (Date.now() - startTime) % animationDuration;
+    const t = elapsed / animationDuration;
+    const sineValue = calculateSineValue(t);
+    const threshold = thresholdPercentage * peakAmplitude;
+
+    if (Math.abs(sineValue * peakAmplitude) < threshold) {
+      showZeroCrossDot();
+    } else {
+      hideZeroCrossDot();
+    }
+
+    updateDigitalOutput(sineValue > 0);
+  }
+
+  // Run the check every frame for smooth animation
+  function animate() {
+    checkStates();
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  function updateSquareWaveAnimation(offset) {
+    const offsetInMs = offset / 1000 * animationDuration;
+    squareWaveAnims.forEach(anim => {
+      const baseFrom = anim.id === 'squareWaveAnim' ? 0 : 1000;
+      const baseTo = anim.id === 'squareWaveAnim' ? -1000 : 0;
+      const newFrom = baseFrom - offsetInMs / 4; // Scale offset to match the SVG coordinate system
+      const newTo = baseTo - offsetInMs / 4;
+      
+      anim.setAttribute('from', newFrom);
+      anim.setAttribute('to', newTo);
+      
+      // Restart the animation
+      anim.beginElement();
+    });
+
+    // Update offset area
+    if (offset !== 0) {
+      const offsetPercentage = Math.abs(offset) / 10000 * 100; // 10ms is half cycle
+      offsetArea.style.width = `${offsetPercentage}%`;
+      offsetArea.style.left = offset < 0 ? `${50 - offsetPercentage/2}%` : `${50 + offsetPercentage/2}%`;
+      offsetArea.style.display = 'block';
+    } else {
+      offsetArea.style.display = 'none';
+    }
+  }
+
+  // Offset button functionality
+  offsetButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      if (this.classList.contains('active')) {
+        // If the button is already active, deactivate it
+        this.classList.remove('active');
+        currentOffset = 0;
+        updateSquareWaveAnimation(0);
+      } else {
+        // Deactivate all buttons
+        offsetButtons.forEach(btn => btn.classList.remove('active'));
+        // Activate this button
+        this.classList.add('active');
+        
+        // Set the new offset
+        currentOffset = parseInt(this.dataset.offset);
+        updateSquareWaveAnimation(currentOffset);
+      }
+    });
+  });
+});
+</script>
+
+</body></html>
