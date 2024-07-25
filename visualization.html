@@ -434,9 +434,14 @@ document.addEventListener('DOMContentLoaded', () => {
         '#34a853': document.querySelector('.indicator-dot.green'),
         '#fbbc05': document.querySelector('.indicator-dot.yellow')
     };
+    const offsets = {
+        '#ff4b4b': 0,        // Red: 0uS
+        '#4a90e2': -480,     // Blue: -480uS
+        '#34a853': -200,     // Green: -200uS
+        '#fbbc05': 200       // Yellow: +200uS
+    };
     const digitalOutputLabel = document.querySelector('.digital-output-label');
     const squareWaveAnims = document.querySelectorAll('.square-wave use');
-    
     const offsetArea = document.querySelector('.offset-area');
     const toggleButtons = document.querySelectorAll('.toggle-button');
     const defaultColor = '#ff4b4b'; // Default color is red
@@ -492,32 +497,30 @@ document.addEventListener('DOMContentLoaded', () => {
     animate();
 
     function updateSquareWaveAnimation(offset) {
-        const offsetInMs = offset / 1000 * animationDuration; // Convert offset to ms
+        const offsetInMs = offset; // Offset in milliseconds
         const now = (Date.now() - startTime) % animationDuration; // Current time in the animation cycle
 
         squareWaveAnims.forEach((anim, index) => {
             const color = anim.getAttribute('stroke');
+            const specificOffset = offsets[color] || 0; // Get the specific offset for the color
+
             const cycleDuration = animationDuration / 2; // Duration of one full cycle (high and low)
             const totalDuration = animationDuration; // Full period duration
 
             // Calculate the offset for this animation
-            const newFrom = (offsetInMs + (index * totalDuration / squareWaveAnims.length)) % totalDuration;
+            const newFrom = (offsetInMs + specificOffset) % totalDuration;
             const newTo = (newFrom + cycleDuration) % totalDuration;
 
             anim.setAttribute('from', newFrom);
             anim.setAttribute('to', newTo);
 
-            // Update the animation by manually setting the `begin` attribute
-            anim.setAttribute('begin', '0s');
-            anim.beginElement(); // Restart the animation
-            
             // Adjust indicator dot visibility
             if (color in digitalOutputDots) {
                 const dot = digitalOutputDots[color];
                 dot.style.transition = 'opacity 0.1s ease';
 
                 // Determine if current time is in high state
-                const adjustedTime = (now + offsetInMs) % totalDuration;
+                const adjustedTime = (now + specificOffset) % totalDuration;
                 const isHighState = adjustedTime >= newFrom && adjustedTime < newTo;
 
                 dot.style.opacity = isHighState ? '1' : '0';
@@ -575,19 +578,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 activateButton(this);
             }
 
-            const offset = parseInt(this.getAttribute('data-offset'), 10) || 0;
+            // Update the square wave animation when a button is clicked
+            const color = this.getAttribute('data-color');
+            const offset = offsets[color] || 0;
             updateSquareWaveAnimation(offset);
         });
     });
+    
 
-    const anyActiveButton = [...toggleButtons].some(btn => btn.classList.contains('active'));
-    if (!anyActiveButton) {
-        setDefaultButton();
-    }
+    // Initialize the default button and update the animation
+    setDefaultButton();
+    const defaultOffset = offsets[defaultColor] || 0;
+    updateSquareWaveAnimation(defaultOffset);
 });
 
 </script>
 
 
+
 </body>
 </html>
+
