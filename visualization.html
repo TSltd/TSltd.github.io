@@ -486,9 +486,21 @@ document.addEventListener('DOMContentLoaded', () => {
             hideZeroCrossDot();
         }
 
-        updateDigitalOutput(sineValue > 0);
-    }
+  // Adjust for the offset and determine the digital output state
+    const offset = offsets[activeColor] || 0;
+    const totalDuration = animationDuration;
+    const cycleDuration = totalDuration / 2; // Duration of one high/low cycle
 
+    // Calculate the current position adjusted by the offset
+    const now = (Date.now() - startTime) % totalDuration;
+    const adjustedTime = (now - offset + totalDuration) % totalDuration; // Correcting offset inversion
+
+    // Determine if the adjusted time is within the high state period
+    const isHighState = adjustedTime >= 0 && adjustedTime < cycleDuration;
+
+    // Update digital output based on the high/low state
+    updateDigitalOutput(isHighState);
+}
     function animate() {
         checkStates();
         requestAnimationFrame(animate);
@@ -534,8 +546,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Adjust indicator dot position
             digitalOutputDots[activeColor].style.left = offsets[activeColor] < 0 
-                ? `${50 - offsetPercentage }%` 
-                : `${50 + offsetPercentage }%`;
+                ? `${50}%` 
+                : `${50}%`;
         } else {
             offsetArea.style.display = 'none';
         }
