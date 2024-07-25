@@ -496,19 +496,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animate();
 
-    function updateSquareWaveAnimation(offset) {
-        const offsetInMs = offset; // Offset in milliseconds
-        const now = (Date.now() - startTime) % animationDuration; // Current time in the animation cycle
-
-        squareWaveAnims.forEach((anim, index) => {
+    function updateSquareWaveAnimation() {
+        squareWaveAnims.forEach(anim => {
             const color = anim.getAttribute('stroke');
-            const specificOffset = offsets[color] || 0; // Get the specific offset for the color
+            const offset = offsets[color] || 0; // Get the specific offset for the color
 
             const cycleDuration = animationDuration / 2; // Duration of one full cycle (high and low)
             const totalDuration = animationDuration; // Full period duration
 
             // Calculate the offset for this animation
-            const newFrom = (offsetInMs + specificOffset) % totalDuration;
+            const newFrom = (offset % totalDuration + totalDuration) % totalDuration;
             const newTo = (newFrom + cycleDuration) % totalDuration;
 
             anim.setAttribute('from', newFrom);
@@ -520,7 +517,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 dot.style.transition = 'opacity 0.1s ease';
 
                 // Determine if current time is in high state
-                const adjustedTime = (now + specificOffset) % totalDuration;
+                const now = (Date.now() - startTime) % totalDuration;
+                const adjustedTime = (now + offset) % totalDuration;
                 const isHighState = adjustedTime >= newFrom && adjustedTime < newTo;
 
                 dot.style.opacity = isHighState ? '1' : '0';
@@ -528,11 +526,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Offset area handling
-        if (offset !== 0) {
-            const offsetPercentage = Math.abs(offset) / 10000 * 100;
+        if (offsets[activeColor] !== 0) {
+            const offsetPercentage = Math.abs(offsets[activeColor]) / 10000 * 100;
             offsetArea.style.width = `${offsetPercentage}%`;
-            offsetArea.style.left = offset < 0 ? `${50 - offsetPercentage / 2}%` : `${50 + offsetPercentage / 2}%`;
+            offsetArea.style.left = offsets[activeColor] < 0 ? `${50 - offsetPercentage / 2}%` : `${50 + offsetPercentage / 2}%`;
             offsetArea.style.display = 'block';
+
+            // Adjust indicator dot position
+            digitalOutputDots[activeColor].style.left = offsets[activeColor] < 0 
+                ? `${50 - offsetPercentage }%` 
+                : `${50 + offsetPercentage }%`;
         } else {
             offsetArea.style.display = 'none';
         }
@@ -544,6 +547,8 @@ document.addEventListener('DOMContentLoaded', () => {
         button.classList.add('active');
         waveforms.forEach(waveform => waveform.style.display = 'inline');
         activeColor = color;
+        // Update the animation with the new color's offset
+        updateSquareWaveAnimation();
     }
 
     function deactivateButton(button) {
@@ -551,8 +556,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const waveforms = document.querySelectorAll(`.square-wave use[stroke="${color}"]`);
         button.classList.remove('active');
         waveforms.forEach(waveform => waveform.style.display = 'none');
+
+        // Check if any buttons are active
         if (![...toggleButtons].some(btn => btn.classList.contains('active'))) {
             activeColor = defaultColor;
+            // Hide offset area when no buttons are active
+            offsetArea.style.display = 'none';
+            // Update the animation with default offset
+            updateSquareWaveAnimation();
+        } else {
+            // If other buttons are active, update animation for the remaining active color
+            const activeButton = [...toggleButtons].find(btn => btn.classList.contains('active'));
+            if (activeButton) {
+                const color = activeButton.getAttribute('data-color');
+                activeColor = color;
+                updateSquareWaveAnimation();
+            }
         }
     }
 
@@ -577,25 +596,17 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 activateButton(this);
             }
-
-            // Update the square wave animation when a button is clicked
-            const color = this.getAttribute('data-color');
-            const offset = offsets[color] || 0;
-            updateSquareWaveAnimation(offset);
         });
     });
-    
 
     // Initialize the default button and update the animation
     setDefaultButton();
-    const defaultOffset = offsets[defaultColor] || 0;
-    updateSquareWaveAnimation(defaultOffset);
 });
 
 </script>
 
 
 
+
 </body>
 </html>
-
