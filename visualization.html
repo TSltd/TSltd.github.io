@@ -3,9 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SynchroPoint</title>
-    <link href="https://fonts.cdnfonts.com/css/raveparty-narrow" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>Zero Cross Detection</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Changed height to min-height */
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            margin-top: 0px;
+        }
+
+        h1 {
+            font-family: 'Raveparty Narrow', sans-serif;
+            color: #1c3a58;
+            font-size: 8vh; /* Adjusted font-size */
+            margin-bottom: 10px; /* Added margin */
+        }
+
+        h2 {
+            font-family: 'Helvetica', sans-serif;
+            color: #1c3a58;
+            font-size: 3vh; /* Adjusted font-size */
+            margin-top: 10px; /* Added margin */
+            margin-bottom: 10px; /* Added margin */
+        }
+
+        p {
+            color: #1c3a58;
+            font-size: 2.5vh; /* Adjusted font-size */
+            margin-bottom: 15px; /* Added margin */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px; /* Adjusted margin */
+        }
+
+        .video {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        .button-link {
+            display: block; /* Changed to block to force new line */
+            margin-top: 20px; /* Adjusted margin */
+        }
+
+        .button-71 {
+            background-color: #1c3a58;
+            border: 0;
+            border-radius: 56px;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block; /* Changed to inline-block */
+            font-family: system-ui, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            outline: 0;
+            padding: 16px 21px;
+            text-align: center;
+            text-decoration: none;
+            transition: all .3s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            margin-top: 30px; /* Added margin */
+        }
+
+        .button-71:hover {
+            box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+            transform: scale(1.05);
+        }
+
+        .graph-images {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 20px;
+        }
+
+        .graph-images img {
+            height: 200px; /* Set the desired height */
+            width: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .internal-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px; /* Adjusted margin */
+        }
+
+        nav {
+    background-color: #fff;
+    padding: 1em;
+    text-align: center;
+  }
+  nav a {
+      font-family: 'Helvetica', sans-serif;
+    color: #b8c7e0;
+    text-decoration: none;
+    margin: 0 1em;
+    transition: color 0.3s ease;
+  }
+  nav a:hover {
+    color: #1c3a58;;
+  }
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: #fff;;
+   
+  }
+
+        .video-container {
+            width: 100%;
+            height: 300px;
+            background-color: #0c0f1d;
+            margin-bottom: 1em;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+        }
+
+        .chart-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #4a90e2;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .ac-wave, .square-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .zero-cross-point, .digital-output-indicator {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4b4b;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            box-shadow: 0 0 10px #ff4b4b;
+            transition: opacity 0.1s ease;
+        }
+
+        .zero-cross-point {
+            left: 50%;
+            top: 50%;
+        }
+
+        .digital-output-indicator {
+            left: 50%;
+            top: 25%;
+        }
+
+        .digital-output-label {
+            position: absolute;
+            left: calc(50% + 15px);
+            top: 80%;
+            color: #ff4b4b;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .offset-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .offset-button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .offset-button:hover {
+            background-color: #3a7bc2;
+        }
+
+        .offset-button.active {
+            background-color: #ff4b4b;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #4a90e2;
+            color: #ffffff;
+            padding: 0.5em 1em;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #3a7bc2;
+        }
+
+        .offset-area {
+            position: absolute;
+            height: 100%;
+            background-color: rgba(255, 75, 75, 0.2);
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        .toggle-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.toggle-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+    background-color: #3a7bc2;
+}
+   /* Hide blue, green, and yellow square waves initially */
+        .square-wave use[stroke="#4a90e2"],
+        .square-wave use[stroke="#34a853"],
+        .square-wave use[stroke="#fbbc05"] {
+            display: none;
+        }
+        
+          .square-wave use[stroke="#4a90e2"],
+        .square-wave use[stroke="#34a853"],
+        .square-wave use[stroke="#fbbc05"] {
+            display: none;
+        }
+         .indicator-dot.red {
+            background-color: #ff4b4b;
+            box-shadow: 0 0 10px #ff4b4b;
+        }
+
+        .indicator-dot.blue {
+            background-color: #4a90e2;
+            box-shadow: 0 0 10px #4a90e2;
+        }
+
+        .indicator-dot.green {
+            background-color: #34a853;
+            box-shadow: 0 0 10px #34a853;
+        }
+
+        .indicator-dot.yellow {
+            background-color: #fbbc05;
+            box-shadow: 0 0 10px #fbbc05;
+        }
+        
+        .toggle-button.active {
+    background-color: #333; /* Dark background color */
+    color: #fff; /* White text color */
+}
+
+  footer {
+    background-color: #fff;
+    color: #1c3a58;
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+  }
+  footer a {
+    color: #1c3a58;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,67 +330,94 @@
         <a href="https://synchropoint.co.uk/zerocrossdetector">Our Product</a>
         <a href="https://synchropoint.co.uk/contact">Contact</a>
     </nav>
-    <main>
-        <h2>Zero Cross Detection - Animated Visualization</h2>
-       <div class="video-container">
-      <div class="chart-label">Input: AC Power Supply</div>
-      <svg class="ac-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
-        <defs>
-          <path id="sineWave" d="M0,150 Q125,350 250,150 T500,150" />
-        </defs>
-        <line x1="0" y1="150" x2="1000" y2="150" stroke="#4a90e2" stroke-width="2" />
-        <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
-        <use xlink:href="#sineWave" x="0" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-          <animate attributeName="x" from="0" to="-500" dur="4s" repeatCount="indefinite" />
-        </use>
-        <use xlink:href="#sineWave" x="500" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-          <animate attributeName="x" from="500" to="0" dur="4s" repeatCount="indefinite" />
-        </use>
-        <use xlink:href="#sineWave" x="1000" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-          <animate attributeName="x" from="1000" to="500" dur="4s" repeatCount="indefinite" />
-        </use>
-      </svg>
-      <div class="zero-cross-point"></div>
-    </div>
+    
+        <h2>Animated Visualization</h2>
+        <main>
+            <div class="video-container">
+                <div class="chart-label">Input: AC Power Supply</div>
+                <svg class="ac-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
+                    <defs>
+                        <path id="sineWave" d="M0,150 Q125,350 250,150 T500,150" />
+                    </defs>
+                    <line x1="0" y1="150" x2="1000" y2="150" stroke="#4a90e2" stroke-width="2" />
+                    <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
+                    <use xlink:href="#sineWave" x="0" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+                        <animate attributeName="x" from="0" to="-500" dur="4s" repeatCount="indefinite" />
+                    </use>
+                    <use xlink:href="#sineWave" x="500" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+                        <animate attributeName="x" from="500" to="0" dur="4s" repeatCount="indefinite" />
+                    </use>
+                    <use xlink:href="#sineWave" x="1000" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+                        <animate attributeName="x" from="1000" to="500" dur="4s" repeatCount="indefinite" />
+                    </use>
+                </svg>
+                <div class="zero-cross-point"></div>
+            </div>
 
-    <div class="video-container">
-      <div class="chart-label">Output: DC Digital Signal</div>
-      <svg class="square-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
-        <defs>
-          <path id="squareWave" d="M-250,75 L-250,225 L0,225 L0,75 L250,75 L250,225 L500,225 L500,75 L750,75 L750,225 L1000,225 L1000,75 L1250,75 L1250,225" />
-        </defs>
-        <line x1="0" y1="225" x2="1000" y2="225" stroke="#4a90e2" stroke-width="2" />
-        <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
-        <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
-          <animate id="squareWaveAnim" attributeName="x" from="0" to="-1000" dur="8s" repeatCount="indefinite" />
-        </use>
-        <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
-          <animate id="squareWaveAnim2" attributeName="x" from="1000" to="0" dur="8s" repeatCount="indefinite" />
-        </use>
-      </svg>
-      <div class="digital-output-indicator"></div>
-      <div class="digital-output-label">OFF</div>
-      <div class="offset-area"></div>
-    </div>
+            <div class="video-container">
+                <div class="chart-label">Output: DC Digital Signal</div>
+                <svg class="square-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
+                    <defs>
+                        <path id="squareWave" d="M-250,75 L-250,225 L0,225 L0,75 L250,75 L250,225 L500,225 L500,75 L750,75 L750,225 L1000,225 L1000,75 L1250,75 L1250,225" />
+                    </defs>
+                    <line x1="0" y1="225" x2="1000" y2="225" stroke="#4a90e2" stroke-width="2" />
+                    <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
+                     <polygon class="phase-offset" fill="rgba(255, 75, 75, 0.2)" stroke="none" />
+                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
+                        <animate id="squareWaveAnim" attributeName="x" from="0" to="-1000" dur="8s" repeatCount="indefinite" />
+                    </use>
+                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
+                        <animate id="squareWaveAnim2" attributeName="x" from="1000" to="0" dur="8s" repeatCount="indefinite" />
+                    </use>
+                    <!-- Added second square waveform -->
+                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#4a90e2" stroke-width="4">
+                        <animate id="squareWaveAnim3" attributeName="x" from="-60" to="-1060" dur="8s" repeatCount="indefinite" />
+                    </use>
+                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#4a90e2" stroke-width="4">
+                        <animate id="squareWaveAnim4" attributeName="x" from="940" to="-60" dur="8s" repeatCount="indefinite" />
+                    </use>
+                    <!-- Added third square waveform -->
+                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#34a853" stroke-width="4">
+                        <animate id="squareWaveAnim5" attributeName="x" from="-25" to="-1025" dur="8s" repeatCount="indefinite" />
+                    </use>
+                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#34a853" stroke-width="4">
+                        <animate id="squareWaveAnim6" attributeName="x" from="975" to="-25" dur="8s" repeatCount="indefinite" />
+                    </use>
+                    <!-- Added fourth square waveform -->
+                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#fbbc05" stroke-width="4">
+                        <animate id="squareWaveAnim7" attributeName="x" from="25" to="-975" dur="8s" repeatCount="indefinite" />
+                    </use>
+                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#fbbc05" stroke-width="4">
+                        <animate id="squareWaveAnim8" attributeName="x" from="1025" to="25" dur="8s" repeatCount="indefinite" />
+                    </use>
+                </svg>
+                    <div class="digital-output-indicator indicator-dot red"></div>
+                <div class="digital-output-indicator indicator-dot blue"></div>
+                <div class="digital-output-indicator indicator-dot green"></div>
+                <div class="digital-output-indicator indicator-dot yellow"></div>
+                <div class="digital-output-label">OFF</div>
+                <div class="offset-area"></div>
+            </div>
 
-    <div class="offset-controls">
-        <h2>Signal Offset:</h2>
-      <button class="offset-button" data-offset="-480">-480µs</button>
-      <button class="offset-button" data-offset="-200">-200µs</button>
-      <button class="offset-button" data-offset="200">+200µs</button>
-    </div>
+            <div class="toggle-controls">
+    <button class="toggle-button" data-color="#ff4b4b">0uS</button>
+    <button class="toggle-button" data-color="#4a90e2">-480uS</button>
+    <button class="toggle-button" data-color="#34a853">-200uS</button>
+    <button class="toggle-button" data-color="#fbbc05">+200uS</button>
+</div>
 
-    <div class="video-description">
-      <h2>Understanding Zero-Crossing Detection</h2>
-      <p>
-        <li>AC Power Supply: the red indicator appears when the the zero crossing is detected.</li>
-          <li>DC Digital Signal: the red indicator shows when the signal value is high (ON state), and disappears when the signal value is low (OFF state).</li>
-            <li>The effect of different offsets on the timing of the digital output can be observed by toggling the buttons.</li>
-      </p>
-   
-    </div>
 
-  </main>
+            <div class="video-description">
+                <h2>Understanding Zero-Crossing Detection</h2>
+                <p>
+                    <li>AC Power Supply: the red indicator appears when the the zero crossing is detected.</li>
+                    <li>DC Digital Signal: the red indicator shows when the signal value is high (ON state), and disappears when the signal value is low (OFF state).</li>
+                    <li>The effect of different offsets on the timing of the digital output can be observed by toggling the buttons.</li>
+                </p>
+            </div>
+        </main>
+    </div>
+    
   <footer>
     <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
     <p>
@@ -85,111 +425,169 @@
       <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
     </p>
   </footer>
-
 <script>
-document.addEventListener('DOMContentLoaded', (event) => {
-  const zeroCrossDot = document.querySelector('.zero-cross-point');
-  const digitalOutputDot = document.querySelector('.digital-output-indicator');
-  const digitalOutputLabel = document.querySelector('.digital-output-label');
-  const squareWaveAnims = document.querySelectorAll('#squareWaveAnim, #squareWaveAnim2');
-  const offsetButtons = document.querySelectorAll('.offset-button');
-  const offsetArea = document.querySelector('.offset-area');
-  const animationDuration = 4000; // 4000ms for 50Hz slowed down to 5%
-  const peakAmplitude = 75; // Half of the 150px vertical range
-  const thresholdPercentage = 0.15; // 10% of peak amplitude
+document.addEventListener('DOMContentLoaded', () => {
+    const zeroCrossDot = document.querySelector('.zero-cross-point');
+    const digitalOutputDots = {
+        '#ff4b4b': document.querySelector('.indicator-dot.red'),
+        '#4a90e2': document.querySelector('.indicator-dot.blue'),
+        '#34a853': document.querySelector('.indicator-dot.green'),
+        '#fbbc05': document.querySelector('.indicator-dot.yellow')
+    };
+    const digitalOutputLabel = document.querySelector('.digital-output-label');
+    const squareWaveAnims = document.querySelectorAll('.square-wave use');
+    
+    const offsetArea = document.querySelector('.offset-area');
+    const toggleButtons = document.querySelectorAll('.toggle-button');
+    const defaultColor = '#ff4b4b'; // Default color is red
+    const animationDuration = 4000; // 4000ms for 50Hz
+    const peakAmplitude = 75; // Half of the 150px vertical range
+    const thresholdPercentage = 0.15; // 15% of peak amplitude
+    let activeColor = defaultColor; // Track the currently active waveform color
 
-  function showZeroCrossDot() {
-    zeroCrossDot.style.opacity = '1';
-  }
-
-  function hideZeroCrossDot() {
-    zeroCrossDot.style.opacity = '0';
-  }
-
-  function updateDigitalOutput(isHigh) {
-    digitalOutputDot.style.opacity = isHigh ? '1' : '0';
-    digitalOutputLabel.textContent = isHigh ? 'ON' : 'OFF';
-  }
-
-  function calculateSineValue(t) {
-    return Math.sin(2 * Math.PI * t);
-  }
-
-  // Calculate the exact timing for zero crossings and digital output changes
-  const crossingInterval = animationDuration / 2; // Two crossings per cycle
-  let startTime = Date.now();
-  let currentOffset = 0;
-
-  function checkStates() {
-    const elapsed = (Date.now() - startTime) % animationDuration;
-    const t = elapsed / animationDuration;
-    const sineValue = calculateSineValue(t);
-    const threshold = thresholdPercentage * peakAmplitude;
-
-    if (Math.abs(sineValue * peakAmplitude) < threshold) {
-      showZeroCrossDot();
-    } else {
-      hideZeroCrossDot();
+    function showZeroCrossDot() {
+        zeroCrossDot.style.opacity = '1';
     }
 
-    updateDigitalOutput(sineValue > 0);
-  }
-
-  // Run the check every frame for smooth animation
-  function animate() {
-    checkStates();
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-
-  function updateSquareWaveAnimation(offset) {
-    const offsetInMs = offset / 1000 * animationDuration;
-    squareWaveAnims.forEach(anim => {
-      const baseFrom = anim.id === 'squareWaveAnim' ? 0 : 1000;
-      const baseTo = anim.id === 'squareWaveAnim' ? -1000 : 0;
-      const newFrom = baseFrom - offsetInMs / 4; // Scale offset to match the SVG coordinate system
-      const newTo = baseTo - offsetInMs / 4;
-      
-      anim.setAttribute('from', newFrom);
-      anim.setAttribute('to', newTo);
-      
-      // Restart the animation
-      anim.beginElement();
-    });
-
-    // Update offset area
-    if (offset !== 0) {
-      const offsetPercentage = Math.abs(offset) / 10000 * 100; // 10ms is half cycle
-      offsetArea.style.width = `${offsetPercentage}%`;
-      offsetArea.style.left = offset < 0 ? `${50 - offsetPercentage/2}%` : `${50 + offsetPercentage/2}%`;
-      offsetArea.style.display = 'block';
-    } else {
-      offsetArea.style.display = 'none';
+    function hideZeroCrossDot() {
+        zeroCrossDot.style.opacity = '0';
     }
-  }
 
-  // Offset button functionality
-  offsetButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      if (this.classList.contains('active')) {
-        // If the button is already active, deactivate it
-        this.classList.remove('active');
-        currentOffset = 0;
-        updateSquareWaveAnimation(0);
-      } else {
-        // Deactivate all buttons
-        offsetButtons.forEach(btn => btn.classList.remove('active'));
-        // Activate this button
-        this.classList.add('active');
-        
-        // Set the new offset
-        currentOffset = parseInt(this.dataset.offset);
-        updateSquareWaveAnimation(currentOffset);
-      }
+    function updateDigitalOutput(isHigh) {
+        Object.keys(digitalOutputDots).forEach(color => {
+            const dot = digitalOutputDots[color];
+            dot.style.opacity = (isHigh && color === activeColor) ? '1' : '0';
+        });
+        digitalOutputLabel.textContent = isHigh ? 'ON' : 'OFF';
+    }
+
+    function calculateSineValue(t) {
+        return Math.sin(2 * Math.PI * t);
+    }
+
+    const crossingInterval = animationDuration / 2; // Two crossings per cycle
+    let startTime = Date.now();
+    let currentOffset = 0;
+
+    function checkStates() {
+        const elapsed = (Date.now() - startTime) % animationDuration;
+        const t = elapsed / animationDuration;
+        const sineValue = calculateSineValue(t);
+        const threshold = thresholdPercentage * peakAmplitude;
+
+        if (Math.abs(sineValue * peakAmplitude) < threshold) {
+            showZeroCrossDot();
+        } else {
+            hideZeroCrossDot();
+        }
+
+        updateDigitalOutput(sineValue > 0);
+    }
+
+    function animate() {
+        checkStates();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    function updateSquareWaveAnimation(offset) {
+        const offsetInMs = offset / 1000 * animationDuration; // Convert offset to ms
+        const now = (Date.now() - startTime) % animationDuration; // Current time in the animation cycle
+
+        squareWaveAnims.forEach((anim, index) => {
+            const color = anim.getAttribute('stroke');
+            const cycleDuration = animationDuration / 2; // Duration of one full cycle (high and low)
+            const totalDuration = animationDuration; // Full period duration
+
+            // Calculate the offset for this animation
+            const newFrom = (offsetInMs + (index * totalDuration / squareWaveAnims.length)) % totalDuration;
+            const newTo = (newFrom + cycleDuration) % totalDuration;
+
+            anim.setAttribute('from', newFrom);
+            anim.setAttribute('to', newTo);
+
+            // Update the animation by manually setting the `begin` attribute
+            anim.setAttribute('begin', '0s');
+            anim.beginElement(); // Restart the animation
+            
+            // Adjust indicator dot visibility
+            if (color in digitalOutputDots) {
+                const dot = digitalOutputDots[color];
+                dot.style.transition = 'opacity 0.1s ease';
+
+                // Determine if current time is in high state
+                const adjustedTime = (now + offsetInMs) % totalDuration;
+                const isHighState = adjustedTime >= newFrom && adjustedTime < newTo;
+
+                dot.style.opacity = isHighState ? '1' : '0';
+            }
+        });
+
+        // Offset area handling
+        if (offset !== 0) {
+            const offsetPercentage = Math.abs(offset) / 10000 * 100;
+            offsetArea.style.width = `${offsetPercentage}%`;
+            offsetArea.style.left = offset < 0 ? `${50 - offsetPercentage / 2}%` : `${50 + offsetPercentage / 2}%`;
+            offsetArea.style.display = 'block';
+        } else {
+            offsetArea.style.display = 'none';
+        }
+    }
+
+    function activateButton(button) {
+        const color = button.getAttribute('data-color');
+        const waveforms = document.querySelectorAll(`.square-wave use[stroke="${color}"]`);
+        button.classList.add('active');
+        waveforms.forEach(waveform => waveform.style.display = 'inline');
+        activeColor = color;
+    }
+
+    function deactivateButton(button) {
+        const color = button.getAttribute('data-color');
+        const waveforms = document.querySelectorAll(`.square-wave use[stroke="${color}"]`);
+        button.classList.remove('active');
+        waveforms.forEach(waveform => waveform.style.display = 'none');
+        if (![...toggleButtons].some(btn => btn.classList.contains('active'))) {
+            activeColor = defaultColor;
+        }
+    }
+
+    function setDefaultButton() {
+        const defaultButton = [...toggleButtons].find(btn => btn.getAttribute('data-color') === defaultColor);
+        if (defaultButton) {
+            activateButton(defaultButton);
+        }
+    }
+
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            toggleButtons.forEach(btn => {
+                if (btn !== this) {
+                    deactivateButton(btn);
+                }
+            });
+
+            if (this.classList.contains('active')) {
+                deactivateButton(this);
+                setDefaultButton();
+            } else {
+                activateButton(this);
+            }
+
+            const offset = parseInt(this.getAttribute('data-offset'), 10) || 0;
+            updateSquareWaveAnimation(offset);
+        });
     });
-  });
+
+    const anyActiveButton = [...toggleButtons].some(btn => btn.classList.contains('active'));
+    if (!anyActiveButton) {
+        setDefaultButton();
+    }
 });
+
 </script>
 
-</body></html>
+
+</body>
+</html>
