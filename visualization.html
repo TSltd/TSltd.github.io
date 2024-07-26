@@ -407,33 +407,37 @@
                     <line x1="0" y1="225" x2="1000" y2="225" stroke="#4a90e2" stroke-width="2" />
                     <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
                      <polygon class="phase-offset" fill="rgba(255, 75, 75, 0.2)" stroke="none" />
-                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
-                        <animate id="squareWaveAnim" attributeName="x" from="0" to="-1000" dur="8s" repeatCount="indefinite" />
-                    </use>
-                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
-                        <animate id="squareWaveAnim2" attributeName="x" from="1000" to="0" dur="8s" repeatCount="indefinite" />
-                    </use>
-                    <!-- Added second square waveform -->
-                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#4a90e2" stroke-width="4">
-                        <animate id="squareWaveAnim3" attributeName="x" from="-60" to="-1060" dur="8s" repeatCount="indefinite" />
-                    </use>
-                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#4a90e2" stroke-width="4">
-                        <animate id="squareWaveAnim4" attributeName="x" from="940" to="-60" dur="8s" repeatCount="indefinite" />
-                    </use>
-                    <!-- Added third square waveform -->
-                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#34a853" stroke-width="4">
-                        <animate id="squareWaveAnim5" attributeName="x" from="-25" to="-1025" dur="8s" repeatCount="indefinite" />
-                    </use>
-                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#34a853" stroke-width="4">
-                        <animate id="squareWaveAnim6" attributeName="x" from="975" to="-25" dur="8s" repeatCount="indefinite" />
-                    </use>
-                    <!-- Added fourth square waveform -->
-                    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#fbbc05" stroke-width="4">
-                        <animate id="squareWaveAnim7" attributeName="x" from="25" to="-975" dur="8s" repeatCount="indefinite" />
-                    </use>
-                    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#fbbc05" stroke-width="4">
-                        <animate id="squareWaveAnim8" attributeName="x" from="1025" to="25" dur="8s" repeatCount="indefinite" />
-                    </use>
+            <!-- Red waveform -->
+    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
+        <animate id="squareWaveAnim" attributeName="x" from="0" to="-1000" dur="8s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#ff4b4b" stroke-width="4">
+        <animate id="squareWaveAnim2" attributeName="x" from="1000" to="0" dur="8s" repeatCount="indefinite" />
+    </use>
+
+    <!-- Blue waveform -->
+    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#4a90e2" stroke-width="4">
+        <animate id="squareWaveAnim3" attributeName="x" from="-24" to="-1024" dur="8s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#4a90e2" stroke-width="4">
+        <animate id="squareWaveAnim4" attributeName="x" from="976" to="-24" dur="8s" repeatCount="indefinite" />
+    </use>
+
+    <!-- Green waveform -->
+    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#34a853" stroke-width="4">
+        <animate id="squareWaveAnim5" attributeName="x" from="-10" to="-1010" dur="8s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#34a853" stroke-width="4">
+        <animate id="squareWaveAnim6" attributeName="x" from="990" to="-10" dur="8s" repeatCount="indefinite" />
+    </use>
+
+    <!-- Yellow waveform -->
+    <use xlink:href="#squareWave" x="0" y="0" fill="none" stroke="#fbbc05" stroke-width="4">
+        <animate id="squareWaveAnim7" attributeName="x" from="10" to="-990" dur="8s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#fbbc05" stroke-width="4">
+        <animate id="squareWaveAnim8" attributeName="x" from="1010" to="10" dur="8s" repeatCount="indefinite" />
+    </use>
      
    <line class="zero-cross-line" x1="0" y1="0" x2="0" y2="300">
         <animate attributeName="x1" from="250" to="0" dur="2s" repeatCount="indefinite" />
@@ -553,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
   // Adjust for the offset and determine the digital output state
-    const offset = offsets[activeColor] || 0;
+    const offset = offsets[activeColor] /2|| 0;
     const totalDuration = animationDuration;
     const cycleDuration = totalDuration / 2; // Duration of one high/low cycle
 
@@ -601,14 +605,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 dot.style.opacity = isHighState ? '1' : '0';
             }
+            
         });
 
-        // Offset area handling
-        if (offsets[activeColor] !== 0) {
-            const offsetPercentage = Math.abs(offsets[activeColor]) / 10000 * 100;
-            offsetArea.style.width = `${offsetPercentage}%`;
-            offsetArea.style.left = offsets[activeColor] < 0 ? `${50 - offsetPercentage / 2}%` : `${50 + offsetPercentage / 2}%`;
-            offsetArea.style.display = 'block';
+     // Offset area handling
+const svgWidth = 1000; // Assuming the SVG width is 1000 pixels
+const periodMicroseconds = 20000; // 10,000 microseconds half cycle for 50Hz wave
+
+if (offsets[activeColor] !== 0) {
+    const offsetPixels = (Math.abs(offsets[activeColor]) / periodMicroseconds) * svgWidth;
+    const offsetPercentage = (offsetPixels / svgWidth) * 100;
+
+    offsetArea.style.width = `${offsetPercentage}%`;
+    offsetArea.style.left = offsets[activeColor] < 0 
+        ? `${50 - (offsetPixels/2) / svgWidth * 100}%` 
+        : `${50 + (offsetPixels/2) / svgWidth * 100}%`;
+    offsetArea.style.display = 'block';
 
             // Adjust indicator dot position
             digitalOutputDots[activeColor].style.left = offsets[activeColor] < 0 
