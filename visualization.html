@@ -299,6 +299,25 @@
             box-shadow: 0 0 10px #fbbc05;
         }
         
+       .zero-cross-line {
+            stroke: #ff4b4b;
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+            opacity: 0.8;
+        }
+
+        @keyframes zeroCrossing {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(-200%);
+            }
+        }
+        
         .toggle-button.active {
     background-color: #333; /* Dark background color */
     color: #fff; /* White text color */
@@ -318,13 +337,14 @@
   footer a:hover {
     text-decoration: underline;
   }
+ 
     </style>
 </head>
 <body>
     <div class="container">
         <h1>SynchroPoint</h1>
         <h2>Precision Zero Cross Detection</h2>    
-    <nav>
+   <nav>
         <a href="https://tsltd.github.io/webpage.html">Home</a>
         <a href="https://synchropoint.co.uk/about">About</a>
         <a href="https://tsltd.github.io/product_detail.html">Our Product</a>
@@ -336,21 +356,45 @@
             <div class="video-container">
                 <div class="chart-label">Input: AC Power Supply</div>
                 <svg class="ac-wave" viewBox="0 0 1000 300" preserveAspectRatio="none">
-                    <defs>
-                        <path id="sineWave" d="M0,150 Q125,350 250,150 T500,150" />
-                    </defs>
-                    <line x1="0" y1="150" x2="1000" y2="150" stroke="#4a90e2" stroke-width="2" />
-                    <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
-                    <use xlink:href="#sineWave" x="0" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-                        <animate attributeName="x" from="0" to="-500" dur="4s" repeatCount="indefinite" />
-                    </use>
-                    <use xlink:href="#sineWave" x="500" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-                        <animate attributeName="x" from="500" to="0" dur="4s" repeatCount="indefinite" />
-                    </use>
-                    <use xlink:href="#sineWave" x="1000" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
-                        <animate attributeName="x" from="1000" to="500" dur="4s" repeatCount="indefinite" />
-                    </use>
-                </svg>
+    <defs>
+        <path id="sineWave" d="M0,150 Q125,350 250,150 T500,150" />
+    </defs>
+    <line x1="0" y1="150" x2="1000" y2="150" stroke="#4a90e2" stroke-width="2" />
+    <line x1="500" y1="0" x2="500" y2="300" stroke="#4a90e2" stroke-width="2" />
+    <use xlink:href="#sineWave" x="0" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+        <animate attributeName="x" from="0" to="-500" dur="4s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#sineWave" x="500" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+        <animate attributeName="x" from="500" to="0" dur="4s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#sineWave" x="1000" y="0" fill="none" stroke="#7a9fd1" stroke-width="4">
+        <animate attributeName="x" from="1000" to="500" dur="4s" repeatCount="indefinite" />
+    </use>
+    <!-- Zero-cross lines at correct intervals -->
+  
+   <line class="zero-cross-line" x1="0" y1="0" x2="0" y2="300">
+        <animate attributeName="x1" from="250" to="0" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="250" to="0" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="500" y1="0" x2="0" y2="300">
+        <animate attributeName="x1" from="500" to="250" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="500" to="250" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="750" y1="0" x2="0" y2="300">
+        <animate attributeName="x1" from="750" to="500" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="750" to="500" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="1000" y1="0" x2="750" y2="300">
+        <animate attributeName="x1" from="1000" to="750" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="1000" to="750" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="1250" y1="0" x2="1000" y2="300">
+        <animate attributeName="x1" from="1250" to="1000" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="1250" to="1000" dur="2s" repeatCount="indefinite" />
+    </line>
+                
+</svg>
+
                 <div class="zero-cross-point"></div>
             </div>
 
@@ -390,6 +434,27 @@
                     <use xlink:href="#squareWave" x="1000" y="0" fill="none" stroke="#fbbc05" stroke-width="4">
                         <animate id="squareWaveAnim8" attributeName="x" from="1025" to="25" dur="8s" repeatCount="indefinite" />
                     </use>
+     
+   <line class="zero-cross-line" x1="0" y1="0" x2="0" y2="300">
+        <animate attributeName="x1" from="250" to="0" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="250" to="0" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="500" y1="0" x2="0" y2="300">
+        <animate attributeName="x1" from="500" to="250" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="500" to="250" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="750" y1="0" x2="0" y2="300">
+        <animate attributeName="x1" from="750" to="500" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="750" to="500" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="1000" y1="0" x2="750" y2="300">
+        <animate attributeName="x1" from="1000" to="750" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="1000" to="750" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line class="zero-cross-line" x1="1250" y1="0" x2="1000" y2="300">
+        <animate attributeName="x1" from="1250" to="1000" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="x2" from="1250" to="1000" dur="2s" repeatCount="indefinite" />
+    </line>
                 </svg>
                     <div class="digital-output-indicator indicator-dot red"></div>
                 <div class="digital-output-indicator indicator-dot blue"></div>
@@ -411,7 +476,7 @@
                 <h2>Understanding Zero-Crossing Detection</h2>
                 <p>
                     <li>AC Power Supply: the red indicator appears when the the zero crossing is detected.</li>
-                    <li>DC Digital Signal: the indicator shows when the signal value is high (ON state), and disappears when the signal value is low (OFF state).</li>
+                    <li>DC Digital Signal: the red indicator shows when the signal value is high (ON state), and disappears when the signal value is low (OFF state).</li>
                     <li>The effect of different offsets on the timing of the digital output can be observed by toggling the buttons.</li>
                 </p>
             </div>
@@ -427,6 +492,7 @@
   </footer>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+   
     const zeroCrossDot = document.querySelector('.zero-cross-point');
     const digitalOutputDots = {
         '#ff4b4b': document.querySelector('.indicator-dot.red'),
