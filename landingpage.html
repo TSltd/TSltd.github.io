@@ -6,10 +6,7 @@
     
     <style>
 
-@font-face {
-  font-family: 'RaveParty Thin';
-  src: url('https://www.fontsaddict.com/fontface/raveparty-thin.ttf');
-}
+
         body {
             margin: 0;
             height: 100vh;
@@ -25,6 +22,12 @@
             max-height: 100vh;
             user-select: none;
         }
+
+        @font-face {
+  font-family: 'RaveParty Thin';
+  src: url('https://www.fontsaddict.com/fontface/raveparty-thin.ttf');
+}
+
         .header-wrapper, .subheader-wrapper {
             position: absolute;
             top: 50%;
@@ -323,7 +326,7 @@
 
     // Draw the waveform
     sineWaveCtx.strokeStyle = 'rgba(255, 255, 255, 1)'; // White waveform color
-    sineWaveCtx.lineWidth = 2;
+    sineWaveCtx.lineWidth = 5;
     sineWaveCtx.stroke();
     sineWaveCtx.restore();
 }
@@ -357,7 +360,7 @@ function drawSquareWave() {
 
     // Draw the waveform
     squareWaveCtx.strokeStyle = 'rgba(255, 255, 255, 1)'; // White waveform color
-    squareWaveCtx.lineWidth = 2;
+    squareWaveCtx.lineWidth = 5;
     squareWaveCtx.stroke();
     squareWaveCtx.restore();
 }
