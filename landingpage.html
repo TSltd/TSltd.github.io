@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            padding: 0;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-family: 'Raveparty Thin', sans-serif;
+            color: #e0e0e0;
+            font-size: 5vw;
+            
+        }
+
+        h2 {
+            font-family: 'Helvetica', sans-serif;
+            color: #e0e0e0;
+            font-size: 2vw;
+            
+            
+            z-index: 11;
+        }
+
+        .nav-wrapper {
+            position: relative;
+            margin-top: 0;
+            width: auto;
+            height: 3em;
+            z-index: 10;
+            justify-content: center;
+            margin-bottom: 1.5em;
+        }
+
+        nav {
+            background-color: black;
+            font-family: 'Helvetica', sans-serif;
+            font-size: 3vh;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 1s ease;
+        }
+
+        .nav-wrapper:hover nav {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        nav a {
+            font-family: 'Helvetica', sans-serif;
+            color: #b8c7e0;
+            text-decoration: none;
+            margin: 0 1em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #e0e0e0;
+        }
+
+        .sprite-animation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            top: -10vh;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+            z-index: 0;
+        }
+
+        .sprite-animation {
+            background-image: url('spritesheet.jpg');
+            background-repeat: no-repeat;
+            display: block;
+            width: 1921px;
+            height: 1080px;
+            background-size: auto;
+            transform-origin: center center;
+            position: absolute;
+            margin-top: 3em;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 1em;
+            font-family: 'Helvetica', sans-serif;
+            font-weight: bold;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 100;
+            white-space: nowrap;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+            visibility: hidden;
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tooltip.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        footer {
+            background-color: black;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 1em;
+            margin-top: 2em;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>SynchroPoint</h1>
+        <h2>Precision Zero Cross Detection</h2>
+        <div class="nav-wrapper">
+            <nav>
+                <a href="https://tsltd.github.io/webpage.html">Home</a>
+                <a href="https://synchropoint.co.uk/about">About</a>
+                <a href="https://tsltd.github.io/product_detail.html">Our Product</a>
+                <a href="https://tsltd.github.io/contact.html">Contact</a>
+            </nav>
+        </div>
+
+        <div class="sprite-animation-container">
+            <div class="sprite-animation"></div>
+            <div class="tooltip">Drag to pan</div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
+        <p>
+          <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
+          <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
+        </p>
+    </footer>
+
+    <script>
+        const container = document.querySelector('.sprite-animation-container');
+        const sprite = document.querySelector('.sprite-animation');
+        const tooltip = document.querySelector('.tooltip');
+
+        const spriteWidth = 1921 * 4; // Width of the spritesheet
+        const spriteHeight = 1080 * 8; // Height of the spritesheet
+
+        const columns = 4;
+        const rows = 8;
+        const framesPerRow = columns - 1; // Exclude the 4th column
+
+        const frameWidth = spriteWidth / columns;
+        const frameHeight = spriteHeight / rows;
+
+        const totalFrames = framesPerRow * rows;
+
+        let isDragging = false;
+        let startX = 0;
+        let currentFrame = 0;
+        let lastFrameTime = 0;
+        const frameInterval = 200; // Time in milliseconds between frame updates
+
+        function scaleSpriteAnimation() {
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+
+            const scaleX = containerWidth / spriteWidth;
+            const scaleY = containerHeight / spriteHeight;
+            const scale = Math.min(scaleX * 4, scaleY * 8);
+
+            sprite.style.transform = `scale(${scale})`;
+        }
+
+        function updateBackgroundPosition(frameIndex) {
+            const row = Math.floor(frameIndex / framesPerRow);
+            const column = frameIndex % framesPerRow;
+
+            const offsetX = -column * frameWidth;
+            const offsetY = -row * frameHeight;
+
+            sprite.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+        }
+
+        function onMouseMove(event) {
+            if (isDragging) {
+                const mouseX = event.clientX;
+                const containerWidth = container.clientWidth;
+
+                const frameIndex = Math.max(Math.floor(((containerWidth - mouseX) / containerWidth) * totalFrames), 0);
+
+                currentFrame = frameIndex;
+                updateBackgroundPosition(frameIndex);
+
+                tooltip.classList.remove('visible');
+                tooltip.classList.add('hidden');
+            } else {
+                const rect = container.getBoundingClientRect();
+                const mouseXRelative = event.pageX - rect.left - window.pageXOffset;
+                const mouseYRelative = event.pageY - rect.top - window.pageYOffset;
+
+                if (mouseXRelative > rect.width * 0.25 && mouseXRelative < rect.width * 0.75 && 
+                    mouseYRelative > rect.height * 0.25 && mouseYRelative < rect.height * 0.75) {
+                    tooltip.style.left = `${event.pageX + 20}px`;
+                    tooltip.style.top = `${event.pageY - 150}px`;
+                    tooltip.classList.remove('hidden');
+                    tooltip.classList.add('visible');
+                } else {
+                    tooltip.classList.remove('visible');
+                    tooltip.classList.add('hidden');
+                }
+            }
+        }
+
+        function onMouseDown(event) {
+            isDragging = true;
+            startX = event.clientX;
+            tooltip.classList.remove('visible');
+            tooltip.classList.add('hidden');
+        }
+
+        function onMouseUp() {
+            isDragging = false;
+        }
+
+        function animate(timestamp) {
+            if (!isDragging) {
+                if (timestamp - lastFrameTime > frameInterval) {
+                    currentFrame = (currentFrame + 1) % totalFrames;
+                    updateBackgroundPosition(currentFrame);
+                    lastFrameTime = timestamp;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        scaleSpriteAnimation();
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mouseup', onMouseUp);
+        window.addEventListener('resize', scaleSpriteAnimation);
+        updateBackgroundPosition(window.innerWidth / 2);
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>
