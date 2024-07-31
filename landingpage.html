@@ -18,7 +18,6 @@
             text-align: center;
             max-height: 100vh;
             user-select: none;
-           
         }
         .header-wrapper, .subheader-wrapper {
             position: absolute;
@@ -34,7 +33,7 @@
         }
         .subheader-wrapper {
             position: absolute;
-            width:100%;
+            width: 100%;
             z-index: 11;
             top: 70%;
         }
@@ -42,26 +41,23 @@
             font-family: 'Raveparty Thin', sans-serif;
             color: #d8dee9;
             font-size: 10vw;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.5); /* Initial glow effect */
-    z-index: 11;
-    transition: text-shadow 0.1s ease;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+            z-index: 11;
+            transition: text-shadow 0.1s ease;
         }
         h1:hover {
-        text-shadow: 0 0 65px rgba(255, 255, 255, 0.8); /* Glowing effect on hover */
-            
+            text-shadow: 0 0 65px rgba(255, 255, 255, 0.8);
         }
         h2 {
             font-family: 'Helvetica', sans-serif;
             color: #e0e0e0;
             font-size: 3vw;
-            text-shadow: 0 0 25px rgba(255, 255, 255, 0.8); /* Initial glow effect */
-    z-index: 11;
-    transition: text-shadow 0.3s ease;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+            z-index: 11;
+            transition: text-shadow 0.3s ease;
         }
-
-          h2:hover {
-        text-shadow: 0 0 45px rgba(255, 255, 255, 1); /* Glowing effect on hover */
-            
+        h2:hover {
+            text-shadow: 0 0 45px rgba(255, 255, 255, 1);
         }
         .nav-wrapper {
             position: absolute;
@@ -78,7 +74,6 @@
         nav {
             background-color: none;
             font-family: 'Helvetica', sans-serif;
-            
             font-weight: bold;
             text-align: center;
             width: 100%;
@@ -89,11 +84,11 @@
             text-decoration: none;
             margin: 0.5em;
             transition: color 0.3s ease, text-shadow 0.3s ease;
-            text-shadow: 0 0 25px rgba(255, 255, 255, 0.5); /* Initial glow effect */
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
         }
         nav a:hover {
             color: #e0e0e0;
-            text-shadow: 0 0 25px rgba(255, 255, 255, 1); /* Glowing effect on hover */
+            text-shadow: 0 0 25px rgba(255, 255, 255, 1);
         }
         .sprite-animation-container {
             position: relative;
@@ -140,28 +135,40 @@
             opacity: 0;
             visibility: hidden;
         }
+
+        .wave-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 12;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+        }
         footer p {
-    margin: 0.5em 0; /* Adjust margins as needed */
-}
-
-footer a {
-    color: #ffffff;
-    text-decoration: none;
-    margin: 0 0.5em; /* Add some spacing between links */
-    display: inline-block; /* Ensure links are inline */
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
+            margin: 0.5em 0;
+        }
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 0.5em;
+            display: inline-block;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="sprite-animation-container">
             <div class="sprite-animation"></div>
+            <canvas id="sineWaveCanvas" class="wave-canvas"></canvas>
+            <canvas id="squareWaveCanvas" class="wave-canvas"></canvas>
             <div class="tooltip">Drag to pan</div>
         </div>
+        
         <div class="header-wrapper">
             <h1 class="main-header">SynchroPoint</h1>
         </div>
@@ -179,7 +186,6 @@ footer a:hover {
     </div>
     <footer>
         <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.
-        
             <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
             <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
         </p>
@@ -193,12 +199,12 @@ footer a:hover {
         const subheaderWrapper = document.querySelector('.subheader-wrapper');
         const navWrapper = document.querySelector('.nav-wrapper');
 
-        const spriteWidth = 1921 * 4; // Width of the spritesheet
-        const spriteHeight = 1080 * 8; // Height of the spritesheet
+        const spriteWidth = 1921 * 4;
+        const spriteHeight = 1080 * 8;
 
         const columns = 4;
         const rows = 8;
-        const framesPerRow = columns - 1; // Exclude the 4th column
+        const framesPerRow = columns - 1;
 
         const frameWidth = spriteWidth / columns;
         const frameHeight = spriteHeight / rows;
@@ -209,7 +215,7 @@ footer a:hover {
         let startX = 0;
         let currentFrame = 0;
         let lastFrameTime = 0;
-        const frameInterval = 200; // Time in milliseconds between frame updates
+        const frameInterval = 200;
 
         function scaleSpriteAnimation() {
             const containerWidth = container.clientWidth;
@@ -241,6 +247,7 @@ footer a:hover {
             } else {
                 navWrapper.style.opacity = 0;
             }
+
             if (isDragging) {
                 const mouseX = event.clientX;
                 const containerWidth = container.clientWidth;
@@ -267,20 +274,119 @@ footer a:hover {
                     tooltip.classList.remove('visible');
                     tooltip.classList.add('hidden');
                 }
-
-                
             }
         }
 
+        const sineWaveCanvas = document.getElementById('sineWaveCanvas');
+        const squareWaveCanvas = document.getElementById('squareWaveCanvas');
+        const sineWaveCtx = sineWaveCanvas.getContext('2d');
+        const squareWaveCtx = squareWaveCanvas.getContext('2d');
+
+        
+
+     
+
+        let waveOffset = 0;
+
+     function drawSineWave() {
+    sineWaveCtx.clearRect(0, 0, sineWaveCanvas.width, sineWaveCanvas.height);
+
+    const amplitude = 100;
+    const wavelength = 400; // Wavelength in pixels
+    const frequency = 2 * Math.PI / wavelength;
+    const yOffset = sineWaveCanvas.height / 4;
+
+    // Clip to the left 1/3 of the canvas
+    sineWaveCtx.save();
+    sineWaveCtx.beginPath();
+    sineWaveCtx.rect(0, 0, sineWaveCanvas.width / 3, sineWaveCanvas.height);
+    sineWaveCtx.clip();
+
+    sineWaveCtx.beginPath();
+    sineWaveCtx.moveTo(0, yOffset);
+    for (let x = 0; x < sineWaveCanvas.width / 3; x++) {
+        const y = amplitude * Math.sin((x + waveOffset) * frequency) + yOffset;
+        sineWaveCtx.lineTo(x, y);
+    }
+
+    // Apply the glow effect
+    sineWaveCtx.shadowColor = 'rgba(255, 255, 255, 1)'; // White glow with higher opacity
+    sineWaveCtx.shadowBlur = 55; // Increased blur radius
+    sineWaveCtx.shadowOffsetX = 20;
+    sineWaveCtx.shadowOffsetY = 20;
+
+    // Draw the waveform
+    sineWaveCtx.strokeStyle = 'rgba(255, 255, 255, 1)'; // White waveform color
+    sineWaveCtx.lineWidth = 2;
+    sineWaveCtx.stroke();
+    sineWaveCtx.restore();
+}
+
+function drawSquareWave() {
+    squareWaveCtx.clearRect(0, 0, squareWaveCanvas.width, squareWaveCanvas.height);
+
+    const amplitude = 100;
+    const wavelength = 400; // Wavelength in pixels
+    const frequency = 2 * Math.PI / wavelength;
+    const yOffset = (3 * squareWaveCanvas.height) / 4;
+
+    // Clip to the right 1/3 of the canvas
+    squareWaveCtx.save();
+    squareWaveCtx.beginPath();
+    squareWaveCtx.rect((2 / 3) * squareWaveCanvas.width, 0, (1 / 3) * squareWaveCanvas.width, squareWaveCanvas.height);
+    squareWaveCtx.clip();
+
+    squareWaveCtx.beginPath();
+    squareWaveCtx.moveTo(0, yOffset);
+    for (let x = 0; x < squareWaveCanvas.width; x++) {
+        const y = (Math.sin((x + waveOffset) * frequency) >= 0 ? amplitude : -amplitude) + yOffset;
+        squareWaveCtx.lineTo(x, y);
+    }
+
+    // Apply the glow effect
+    squareWaveCtx.shadowColor = 'rgba(255, 255, 255, 1)'; // White glow with higher opacity
+    squareWaveCtx.shadowBlur = 55; // Increased blur radius
+    squareWaveCtx.shadowOffsetX = 20;
+    squareWaveCtx.shadowOffsetY =20;
+
+    // Draw the waveform
+    squareWaveCtx.strokeStyle = 'rgba(255, 255, 255, 1)'; // White waveform color
+    squareWaveCtx.lineWidth = 2;
+    squareWaveCtx.stroke();
+    squareWaveCtx.restore();
+}
+
+
+
+function resizeCanvas() {
+    sineWaveCanvas.width = sineWaveCanvas.clientWidth;
+    sineWaveCanvas.height = sineWaveCanvas.clientHeight;
+    squareWaveCanvas.width = squareWaveCanvas.clientWidth;
+    squareWaveCanvas.height = squareWaveCanvas.clientHeight;
+}
+
+function animateWaves() {
+    if (isDragging) {
+        waveOffset -= 2; // Subtract from waveOffset to scroll left
+        drawSineWave();
+        drawSquareWave();
+    }
+    requestAnimationFrame(animateWaves);
+}
         function onMouseDown(event) {
             isDragging = true;
             startX = event.clientX;
             tooltip.classList.remove('visible');
             tooltip.classList.add('hidden');
+            sineWaveCanvas.style.display = 'block';
+            squareWaveCanvas.style.display = 'block';
+            resizeCanvas();
         }
 
         function onMouseUp() {
             isDragging = false;
+            sineWaveCanvas.style.display = 'none';
+            squareWaveCanvas.style.display = 'none';
         }
 
         function animate(timestamp) {
@@ -314,6 +420,7 @@ footer a:hover {
         window.addEventListener('resize', scaleSpriteAnimation);
         updateBackgroundPosition(window.innerWidth / 2);
         requestAnimationFrame(animate);
+        requestAnimationFrame(animateWaves);
     </script>
 </body>
 </html>
