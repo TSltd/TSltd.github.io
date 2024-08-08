@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <style>
+
+
         body {
             margin: 0;
             height: 100vh;
@@ -21,9 +24,9 @@
         }
 
         @font-face {
-            font-family: 'RaveParty Thin';
-            src: url('fonts/Ravethin.ttf') format('truetype');
-        }
+  font-family: 'RaveParty Thin';
+  src: url('fonts/Ravethin.ttf') format('truetype');
+}
 
         .header-wrapper, .subheader-wrapper {
             position: absolute;
@@ -37,13 +40,12 @@
             transition: opacity 0.5s ease;
             margin: 2vh;
         }
-
         .subheader-wrapper {
-            top: 70%;
+            position: absolute;
             width: 100%;
             z-index: 11;
+            top: 70%;
         }
-
         h1 {
             font-family: 'Raveparty Thin', sans-serif;
             color: #d8dee9;
@@ -52,11 +54,9 @@
             z-index: 11;
             transition: text-shadow 0.1s ease;
         }
-
         h1:hover {
             text-shadow: 0 0 65px rgba(255, 255, 255, 0.8);
         }
-
         h2 {
             font-family: 'Helvetica', sans-serif;
             color: #e0e0e0;
@@ -65,11 +65,9 @@
             z-index: 11;
             transition: text-shadow 0.3s ease;
         }
-
         h2:hover {
             text-shadow: 0 0 45px rgba(255, 255, 255, 1);
         }
-
         .nav-wrapper {
             position: absolute;
             bottom: 0;
@@ -82,14 +80,13 @@
             font-size: 3vw;
             margin: 1vh;
         }
-
         nav {
+            background-color: none;
             font-family: 'Helvetica', sans-serif;
             font-weight: bold;
             text-align: center;
             width: 100%;
         }
-
         nav a {
             font-family: 'Helvetica', sans-serif;
             color: #cbd4e4;
@@ -98,12 +95,10 @@
             transition: color 0.3s ease, text-shadow 0.3s ease;
             text-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
         }
-
         nav a:hover {
             color: #e0e0e0;
             text-shadow: 0 0 25px rgba(255, 255, 255, 1);
         }
-
         .sprite-animation-container {
             position: relative;
             width: 100vw;
@@ -115,7 +110,6 @@
             background-color: black;
             z-index: 0;
         }
-
         .sprite-animation {
             background-image: url('spritesheet.jpg');
             background-repeat: no-repeat;
@@ -126,7 +120,6 @@
             transform-origin: center center;
             position: absolute;
         }
-
         .tooltip {
             position: absolute;
             background-color: rgba(0, 0, 0, 0.8);
@@ -143,12 +136,10 @@
             transition: opacity 0.7s ease, visibility 0.7s ease;
             visibility: hidden;
         }
-
         .tooltip.visible {
             opacity: 1;
             visibility: visible;
         }
-
         .tooltip.hidden {
             opacity: 0;
             visibility: hidden;
@@ -164,36 +155,17 @@
             z-index: 12;
             transition: opacity 0.7s ease, visibility 0.7s ease;
         }
-
         footer p {
             margin: 0.5em 0;
         }
-
         footer a {
             color: #ffffff;
             text-decoration: none;
             margin: 0 0.5em;
             display: inline-block;
         }
-
         footer a:hover {
             text-decoration: underline;
-        }
-
-        /* Mobile-specific styles */
-        @media only screen and (max-width: 600px) {
-            h1 {
-                font-size: 20vw;  /* Adjust font size for mobile */
-            }
-            h2 {
-                font-size: 8vw;  /* Adjust subheader font size */
-            }
-            .sprite-animation {
-                background-size: cover;  /* Adjust background size for better fit */
-            }
-            .nav-wrapper {
-                font-size: 5vw;  /* Increase navigation font size on mobile */
-            }
         }
     </style>
 </head>
@@ -236,12 +208,12 @@
         const subheaderWrapper = document.querySelector('.subheader-wrapper');
         const navWrapper = document.querySelector('.nav-wrapper');
 
-        const spriteWidth = 1921;
-        const spriteHeight = 1080;
+        const spriteWidth = 1921 * 4;
+        const spriteHeight = 1080 * 8;
 
         const columns = 4;
         const rows = 8;
-        const framesPerRow = columns;
+        const framesPerRow = columns - 1;
 
         const frameWidth = spriteWidth / columns;
         const frameHeight = spriteHeight / rows;
@@ -249,6 +221,7 @@
         const totalFrames = framesPerRow * rows;
 
         let isDragging = false;
+        let startX = 0;
         let currentFrame = 0;
         let lastFrameTime = 0;
         const frameInterval = 200;
@@ -257,11 +230,11 @@
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
 
-            const scaleX = containerWidth / frameWidth;
-            const scaleY = containerHeight / frameHeight;
-            const scale = Math.min(scaleX, scaleY);
+            const scaleX = containerWidth / spriteWidth;
+            const scaleY = containerHeight / spriteHeight;
+            const scale = Math.min(scaleX * 4, scaleY * 8);
 
-            sprite.style.transform = `scale(${scale})`;
+            sprite.style.transform = scale(${scale});
         }
 
         function updateBackgroundPosition(frameIndex) {
@@ -271,7 +244,7 @@
             const offsetX = -column * frameWidth;
             const offsetY = -row * frameHeight;
 
-            sprite.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+            sprite.style.backgroundPosition = ${offsetX}px ${offsetY}px;
         }
 
         function onMouseMove(event) {
@@ -287,46 +260,176 @@
             if (isDragging) {
                 const mouseX = event.clientX;
                 const containerWidth = container.clientWidth;
-                const relativeX = (mouseX / containerWidth) * totalFrames;
 
-                currentFrame = Math.floor(relativeX);
-                updateBackgroundPosition(currentFrame);
+                const frameIndex = Math.max(Math.floor(((containerWidth - mouseX) / containerWidth) * totalFrames), 0);
+
+                currentFrame = frameIndex;
+                updateBackgroundPosition(frameIndex);
+
+                tooltip.classList.remove('visible');
+                tooltip.classList.add('hidden');
+            } else {
+                const rect = container.getBoundingClientRect();
+                const mouseXRelative = event.pageX - rect.left - window.pageXOffset;
+                const mouseYRelative = event.pageY - rect.top - window.pageYOffset;
+
+                if (mouseXRelative > rect.width * 0.25 && mouseXRelative < rect.width * 0.75 && 
+                    mouseYRelative > rect.height * 0.25 && mouseYRelative < rect.height * 0.75) {
+                    tooltip.style.left = ${event.pageX + 20}px;
+                    tooltip.style.top = ${event.pageY - 150}px;
+                    tooltip.classList.remove('hidden');
+                    tooltip.classList.add('visible');
+                } else {
+                    tooltip.classList.remove('visible');
+                    tooltip.classList.add('hidden');
+                }
             }
         }
 
+        const sineWaveCanvas = document.getElementById('sineWaveCanvas');
+        const squareWaveCanvas = document.getElementById('squareWaveCanvas');
+        const sineWaveCtx = sineWaveCanvas.getContext('2d');
+        const squareWaveCtx = squareWaveCanvas.getContext('2d');
+
+        
+
+     
+
+        let waveOffset = 0;
+
+     function drawSineWave() {
+    sineWaveCtx.clearRect(0, 0, sineWaveCanvas.width, sineWaveCanvas.height);
+
+    const amplitude = 100;
+    const wavelength = 400; // Wavelength in pixels
+    const frequency = 2 * Math.PI / wavelength;
+    const yOffset = sineWaveCanvas.height / 3;
+
+    // Clip to the left 1/3 of the canvas
+    sineWaveCtx.save();
+    sineWaveCtx.beginPath();
+    sineWaveCtx.rect(0, 0, sineWaveCanvas.width / 3, sineWaveCanvas.height);
+    sineWaveCtx.clip();
+
+    sineWaveCtx.beginPath();
+    sineWaveCtx.moveTo(0, yOffset);
+    for (let x = 0; x < sineWaveCanvas.width / 3; x++) {
+        const y = amplitude * Math.sin((x + waveOffset) * frequency) + yOffset;
+        sineWaveCtx.lineTo(x, y);
+    }
+
+    // Apply the glow effect
+    sineWaveCtx.shadowColor = 'rgba(255, 255, 255, 0.8)'; // White glow with higher opacity
+    sineWaveCtx.shadowBlur = 25; // Increased blur radius
+    sineWaveCtx.shadowOffsetX = -10;
+    sineWaveCtx.shadowOffsetY = 10;
+
+    // Draw the waveform
+    sineWaveCtx.strokeStyle = 'rgba(255, 255, 255, 1)'; // White waveform color
+    sineWaveCtx.lineWidth = 5;
+    sineWaveCtx.stroke();
+    sineWaveCtx.restore();
+}
+
+function drawSquareWave() {
+    squareWaveCtx.clearRect(0, 0, squareWaveCanvas.width, squareWaveCanvas.height);
+
+    const amplitude = 100;
+    const wavelength = 400; // Wavelength in pixels
+    const frequency = 2 * Math.PI / wavelength;
+    const yOffset = (4 * squareWaveCanvas.height) / 6;
+
+    // Clip to the right 1/3 of the canvas
+    squareWaveCtx.save();
+    squareWaveCtx.beginPath();
+    squareWaveCtx.rect((2 / 3) * squareWaveCanvas.width, 0, (1 / 3) * squareWaveCanvas.width, squareWaveCanvas.height);
+    squareWaveCtx.clip();
+
+    squareWaveCtx.beginPath();
+    squareWaveCtx.moveTo(0, yOffset);
+    for (let x = 0; x < squareWaveCanvas.width; x++) {
+        const y = (Math.sin((x + waveOffset) * frequency) >= 0 ? amplitude : -amplitude) + yOffset;
+        squareWaveCtx.lineTo(x, y);
+    }
+
+    // Apply the glow effect
+    squareWaveCtx.shadowColor = 'rgba(255, 255, 255, 0.8)'; // White glow with higher opacity
+    squareWaveCtx.shadowBlur = 25; // Increased blur radius
+    squareWaveCtx.shadowOffsetX = -10;
+    squareWaveCtx.shadowOffsetY = 10;
+
+    // Draw the waveform
+    squareWaveCtx.strokeStyle = 'rgba(255, 255, 255, 1)'; // White waveform color
+    squareWaveCtx.lineWidth = 5;
+    squareWaveCtx.stroke();
+    squareWaveCtx.restore();
+}
+
+
+
+function resizeCanvas() {
+    sineWaveCanvas.width = sineWaveCanvas.clientWidth;
+    sineWaveCanvas.height = sineWaveCanvas.clientHeight;
+    squareWaveCanvas.width = squareWaveCanvas.clientWidth;
+    squareWaveCanvas.height = squareWaveCanvas.clientHeight;
+}
+
+function animateWaves() {
+    if (isDragging) {
+        waveOffset -= 2; // Subtract from waveOffset to scroll left
+        drawSineWave();
+        drawSquareWave();
+    }
+    requestAnimationFrame(animateWaves);
+}
         function onMouseDown(event) {
             isDragging = true;
+            startX = event.clientX;
             tooltip.classList.remove('visible');
+            tooltip.classList.add('hidden');
+            sineWaveCanvas.style.display = 'block';
+            squareWaveCanvas.style.display = 'block';
+            resizeCanvas();
         }
 
         function onMouseUp() {
             isDragging = false;
+            sineWaveCanvas.style.display = 'none';
+            squareWaveCanvas.style.display = 'none';
         }
 
         function animate(timestamp) {
             if (!isDragging) {
-                if (timestamp - lastFrameTime >= frameInterval) {
+                if (timestamp - lastFrameTime > frameInterval) {
                     currentFrame = (currentFrame + 1) % totalFrames;
                     updateBackgroundPosition(currentFrame);
                     lastFrameTime = timestamp;
                 }
             }
+
+            if (currentFrame >= 6 && currentFrame < 18) {
+                headerWrapper.style.opacity = 0;
+            } else {
+                headerWrapper.style.opacity = 1;
+            }
+
+            if (currentFrame >= 21 || currentFrame < 6) {
+                subheaderWrapper.style.opacity = 1;
+            } else {
+                subheaderWrapper.style.opacity = 0;
+            }
+
             requestAnimationFrame(animate);
         }
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mousedown', onMouseDown);
-        document.addEventListener('mouseup', onMouseUp);
-
+        scaleSpriteAnimation();
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mouseup', onMouseUp);
         window.addEventListener('resize', scaleSpriteAnimation);
-
-        const spriteImage = new Image();
-        spriteImage.src = 'spritesheet.jpg';
-        spriteImage.onload = () => {
-            sprite.style.backgroundImage = `url(${spriteImage.src})`;
-            scaleSpriteAnimation();
-            requestAnimationFrame(animate);
-        };
+        updateBackgroundPosition(window.innerWidth / 2);
+        requestAnimationFrame(animate);
+        requestAnimationFrame(animateWaves);
     </script>
 </body>
 </html>
