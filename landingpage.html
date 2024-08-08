@@ -234,7 +234,7 @@
             const scaleY = containerHeight / spriteHeight;
             const scale = Math.min(scaleX * 4, scaleY * 8);
 
-            sprite.style.transform = scale(${scale});
+            sprite.style.transform = `scale(${scale})`;
         }
 
         function updateBackgroundPosition(frameIndex) {
@@ -244,7 +244,7 @@
             const offsetX = -column * frameWidth;
             const offsetY = -row * frameHeight;
 
-            sprite.style.backgroundPosition = ${offsetX}px ${offsetY}px;
+            sprite.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
         }
 
         function onMouseMove(event) {
@@ -275,8 +275,8 @@
 
                 if (mouseXRelative > rect.width * 0.25 && mouseXRelative < rect.width * 0.75 && 
                     mouseYRelative > rect.height * 0.25 && mouseYRelative < rect.height * 0.75) {
-                    tooltip.style.left = ${event.pageX + 20}px;
-                    tooltip.style.top = ${event.pageY - 150}px;
+                    tooltip.style.left = `${event.pageX + 20}px`;
+                    tooltip.style.top = `${event.pageY - 150}px`;
                     tooltip.classList.remove('hidden');
                     tooltip.classList.add('visible');
                 } else {
