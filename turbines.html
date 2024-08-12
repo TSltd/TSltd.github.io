@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIF Animation with Spritesheet</title>
+    <style>
+        /* Inline CSS */
+        .sprite-animation {
+            width: 400px; /* Set this to the width of one frame */
+            height: 100vh; /* Scale to fit the height of the window */
+            background-image: url('turbinesspritesheet.jpg');
+            background-repeat: no-repeat;
+            background-size: 4000px 100%; /* Set this to the total width and height of the sprite sheet */
+            animation: play 1s steps(10) infinite;
+        }
+
+        @keyframes play {
+            from {
+                background-position: 0px;
+            }
+            to {
+                background-position: -4000px; /* Set this to the negative total width of the sprite sheet */
+            }
+        }
+
+        body, html {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="sprite-animation"></div>
+</body>
+</html>

@@ -119,6 +119,7 @@
             background-size: auto;
             transform-origin: center center;
             position: absolute;
+            transition: opacity 2s ease-in-out; /* Smooth fade-in and fade-out */
         }
         .tooltip {
             position: absolute;
@@ -155,6 +156,88 @@
             z-index: 12;
             transition: opacity 0.7s ease, visibility 0.7s ease;
         }
+
+    /* Styles for overlay sprite animation */
+.overlay-sprite-animation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 400px; /* Width of one frame */
+    height: 100vh; /* Full height of the viewport */
+    background-image: url('turbinesspritesheet.jpg');
+    background-repeat: no-repeat;
+    background-size: 4000px 100%; /* Width and height of the sprite sheet */
+    animation: play 1s steps(10) infinite;
+    opacity: 0; /* Start hidden */
+    transition: opacity 2s ease-in-out; /* Smooth fade-in and fade-out */
+    z-index: 2; /* Ensure it overlays on top of the main animation */
+
+       /* Gradient transparency */
+       -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+
+@keyframes play {
+    from {
+        background-position: 0px;
+    }
+    to {
+        background-position: -4000px; /* Negative width of the sprite sheet */
+    }
+}
+
+        @keyframes play {
+            from {
+                background-position: 0px;
+            }
+            to {
+                background-position: -4000px; /* Set this to the negative total width of the sprite sheet */
+            }
+        }
+
+        .binary-code-animation {
+    position: absolute;
+    top: 0;
+    left: 65%;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 36; /* Ensure it's above other elements */
+    display: block; /* Make sure it's displayed */
+    opacity: 0; /* Make sure it's visible initially */
+    color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    font-family: 'Helvetica', sans-serif;
+    font-size: 4em; /* Adjust size as needed */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-align: left; /* Align text to the left */
+    transition: opacity 2s ease-in-out; /* Smooth fade-in and fade-out */
+       /* Gradient transparency */
+       -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+
+.binary-code-animation::before {
+    content: '10101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010';
+    position: absolute;
+    left: 60;
+    top: 40%;
+    color: #ffffff; /* Make sure text is white */
+    animation: scrollBinary 80s linear infinite;
+}
+
+@keyframes scrollBinary {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+
+
         footer p {
             margin: 0.5em 0;
         }
@@ -173,6 +256,9 @@
     <div class="container">
         <div class="sprite-animation-container">
             <div class="sprite-animation"></div>
+            <div class="overlay-sprite-animation"></div> 
+            <div class="binary-code-animation"></div>
+
             <canvas id="sineWaveCanvas" class="wave-canvas"></canvas>
             <canvas id="squareWaveCanvas" class="wave-canvas"></canvas>
             <div class="tooltip">Drag to pan</div>
@@ -382,21 +468,32 @@ function animateWaves() {
     }
     requestAnimationFrame(animateWaves);
 }
-        function onMouseDown(event) {
-            isDragging = true;
-            startX = event.clientX;
-            tooltip.classList.remove('visible');
-            tooltip.classList.add('hidden');
-            sineWaveCanvas.style.display = 'block';
-            squareWaveCanvas.style.display = 'block';
-            resizeCanvas();
-        }
 
-        function onMouseUp() {
-            isDragging = false;
-            sineWaveCanvas.style.display = 'none';
-            squareWaveCanvas.style.display = 'none';
-        }
+const overlaySprite = document.querySelector('.overlay-sprite-animation');
+const binaryCodeAnimation = document.querySelector('.binary-code-animation');
+
+function onMouseDown(event) {
+    isDragging = true;
+    startX = event.clientX;
+    tooltip.classList.remove('visible');
+    tooltip.classList.add('hidden');
+    sineWaveCanvas.style.display = 'block';
+    squareWaveCanvas.style.display = 'block';
+    resizeCanvas();
+    overlaySprite.style.opacity = 1; // Fade in the overlay sprite animation
+    binaryCodeAnimation.style.display = 'block'; // Ensure it is set to display
+    setTimeout(() => binaryCodeAnimation.style.opacity = 1, 10); // Fade in binary code animation
+}
+
+function onMouseUp() {
+    isDragging = false;
+    sineWaveCanvas.style.display = 'none';
+    squareWaveCanvas.style.display = 'none';
+    overlaySprite.style.opacity = 0; // Fade out the overlay sprite animation
+    binaryCodeAnimation.style.opacity = 0; // Fade out binary code animation
+    setTimeout(() => binaryCodeAnimation.style.display = 'none', 2000); // Hide binary code animation after fade-out
+}
+
 
         function animate(timestamp) {
             if (!isDragging) {
