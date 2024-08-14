@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynchroPoint</title>
+    <link href="https://fonts.cdnfonts.com/css/raveparty-narrow" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 20px;
+            background-color: #fff;
+        }
+
+        .box:nth-child(1) {
+            border: none;
+            box-shadow: none;
+        }
+
+        .box:nth-child(even) {
+            flex-direction: row;
+        }
+
+        .box:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .box img {
+            width: 40%;
+            height: auto;
+            border-radius: 10px;
+            border: 0px solid #ccc;
+        }
+
+        .box-content {
+            width: 55%;
+            padding: 0 20px;
+        }
+
+        .box-content h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .box-content p {
+            color: #555;
+        }
+
+        nav {
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .box {
+                flex-direction: column;
+            }
+
+            .box:nth-child(even) {
+                flex-direction: column;
+            }
+
+            .box img,
+            .box-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SynchroPoint</h1>
+        <h2>Precision Zero Cross Detection</h2>    
+        <nav>
+            <a href="https://tsltd.github.io/webpage.html">Home</a>
+            <a href="https://tsltd.github.io/about">About</a>
+            <a href="https://tsltd.github.io/product_detail.html">Our Product</a>
+            <a href="https://tsltd.github.io/contact.html">Contact</a>
+        </nav>
+
+        <!-- Box 1 -->
+        <div class="box">
+            <video controls>
+                <source src="videos/What_Is_a_Zero_Cross_Detector.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="box-content">
+                <h3>What is a Zero Cross Detector?</h3>
+                <p>The basics of zero cross detection in under 4 minutes!</p>
+            </div>
+        </div>
+
+        <!-- Box 2 -->
+        <div class="box">
+            <img src="scope.png" alt="Image placeholder">
+            <div class="box-content">
+                <h3>Power Supply Monitoring</h3>
+                <p>A zero cross detector is essential for digitally monitoring the frequency of a power supply, and can also be used to monitor stability. The SynchroPoint zero cross detector also allows the polarity of the supply voltage to be determined at a given time.</p>
+            </div>
+        </div>
+
+        <!-- Box 3 -->
+        <div class="box">
+            <img src="image-placeholder.png" alt="Image placeholder">
+            <div class="box-content">
+                <h3>Power Control - SCR Voltage Regulation</h3>
+                <p>Combined with a microcontroller and a relay, the zero cross detector forms a Silicon Controlled Rectifier (SCR) to control average voltage output. This is used to modulate power, for example to control the brightness of a light, the temperature of a heater or the speed of a motor.</p>
+            </div>
+        </div>
+
+        <!-- Box 4 -->
+        <div class="box">
+            <img src="image-placeholder.png" alt="Image placeholder">
+            <div class="box-content">
+                <h3>Power Generation - Grid Injection</h3>
+                <p>A zero cross detector is essential when injecting generated electricity into the power grid to ensure seamless and synchronized integration. By detecting the precise moment when the grid's AC voltage crosses zero, the zero cross detector enables the synchronization of the phase, frequency, and voltage of the generated power with that of the grid. This synchronization is crucial to avoid disruptions, minimize the risk of electrical faults, and ensure that the injected power blends smoothly with the existing grid supply. Without zero cross detection, improper synchronization could lead to inefficiencies, equipment damage, or even grid instability.</p>
+            </div>
+        </div>
+
+        <!-- Box 5 -->
+        <div class="box">
+            <img src="image-placeholder.png" alt="Image placeholder">
+            <div class="box-content">
+                <h3>Automation - Efficient Distribution</h3>
+                <p>A zero cross detector can enable efficient power distribution across multiple channels using integral wave burst firing methods. By ensuring precise timing when switching power at the zero-voltage point of the AC waveform, electrical noise and power loss are reduced, allowing for smooth and accurate power delivery.</p>
+            </div>
+        </div>
+
+        <a href="webpage.html" class="button-71">Back to Home</a>
+    </div>
+    <footer>
+        <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
+        <p>
+            <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
+            <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
+        </p>
+    </footer>
+</body>
+</html>
