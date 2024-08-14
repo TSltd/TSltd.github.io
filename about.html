@@ -13,11 +13,13 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             background-color: #f4f4f4;
         }
 
         .container {
+            flex: 1;
             width: 100%;
             margin: 0 auto;
             padding: 20px;
@@ -27,7 +29,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 80%;
+            width: 90%;
             margin: 40px auto;
             padding: 40px;
             border-radius: 20px;
@@ -39,11 +41,11 @@
             box-shadow: none;
         }
 
-        .box:nth-child(even) {
+        .box:nth-child(odd) {
             flex-direction: row;
         }
 
-        .box:nth-child(odd) {
+        .box:nth-child(even) {
             flex-direction: row-reverse;
         }
 
@@ -80,16 +82,20 @@
         }
 
         footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: #fff;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: underline;
-        }
+    background-color: #fff;
+    color: #1c3a58;
+    text-align: center;
+    padding: 0;
+  margin-top: 0;
+    width: 100%
+  }
+  footer a {
+    color: #1c3a58;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
 
         @media (max-width: 768px) {
             .box {
@@ -104,6 +110,7 @@
             .box-content {
                 width: 100%;
             }
+
         }
     </style>
 </head>
@@ -117,7 +124,7 @@
             <a href="https://tsltd.github.io/product_detail.html">Our Product</a>
             <a href="https://tsltd.github.io/contact.html">Contact</a>
         </nav>
-
+<main>
         <!-- Box 1 -->
         <div class="box">
             <video controls>
@@ -167,13 +174,14 @@
         </div>
 
         <a href="webpage.html" class="button-71">Back to Home</a>
-    </div>
-    <footer>
-        <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
-        <p>
-            <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
-            <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
-        </p>
-    </footer>
+    </main>
+</div>
+<footer>
+    <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
+    <p>
+        <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
+        <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
+    </p>
+</footer>
 </body>
 </html>
