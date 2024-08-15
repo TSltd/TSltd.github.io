@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waveform Visualization Widget</title>
+    <style>
+          body {
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #fff;
+        }
+        canvas {
+            border: 1px solid black;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .widget-container {
+            position: relative;
+            width: 800px;
+            height: 400px;
+        }
+        .power-levels {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            text-align: right;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <canvas id="waveformCanvas" width="800" height="400"></canvas>
+        <div class="power-levels" id="powerLevels"></div>
+    </div>
+    <script>
+        const canvas = document.getElementById('waveformCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        const amplitude = height / 8;
+        const frequency = 0.2;
+        const cycleLength = 50;
+        const numChannels = 4;
+        const sineWaveSpeed = -1;
+        const signalSpeed = 1;
+        const waveformWidth = width;
+        const powerLevelOffsetX = width - 80; // Position for power levels to ensure they are within view
+
+        let sineWaveOffsetX = 0;
+        let signalOffsetX = 0;
+
+        let storedWaveforms = [];
+        let powerLevels = [];
+        const waveformLength = width + waveformWidth;
+
+        function generateWaveforms() {
+            storedWaveforms = [];
+            powerLevels = [];
+            const channelHeight = height / numChannels;
+
+            let zeroCrossings = [];
+            let channelStatesArray = [];
+            let previousY = Math.sin(frequency * (0 - width / 2));
+
+            for (let x = 0; x <= waveformLength; x++) {
+                const y = Math.sin(frequency * (x - width / 2));
+                if (previousY <= 0 && y > 0) {
+                    zeroCrossings.push(x);
+
+                    const channelStates = Array(numChannels).fill(false);
+                    const channelToTurnOn = Math.floor(Math.random() * numChannels);
+                    channelStates[channelToTurnOn] = true;
+                    channelStatesArray.push(channelStates);
+                }
+                previousY = y;
+            }
+
+            for (let i = 0; i < numChannels; i++) {
+                const yOffset = i * channelHeight + channelHeight / 2;
+                const waveform = [];
+
+                let currentlyOn = false;
+                let previousZeroCrossing = 0;
+                let onPeriods = 0;
+                let totalPeriods = 0;
+
+                zeroCrossings.forEach((currentZeroCrossing, index) => {
+                    const nextZeroCrossing = zeroCrossings[index + 1] || waveformLength;
+                    const channelStates = channelStatesArray[index];
+
+                    if (channelStates[i]) {
+                        totalPeriods++;
+                        if (!currentlyOn) {
+                            waveform.push({ x: previousZeroCrossing, y: yOffset });
+                            waveform.push({ x: currentZeroCrossing, y: yOffset });
+                            currentlyOn = true;
+                        }
+
+                        const cycleStart = Math.max(previousZeroCrossing, currentZeroCrossing);
+                        const cycleEnd = Math.min(nextZeroCrossing, cycleStart + cycleLength);
+
+                        for (let x = cycleStart; x <= cycleEnd; x++) {
+                            const y = amplitude * Math.sin(frequency * (x - width / 2)) + yOffset;
+                            waveform.push({ x, y });
+                        }
+
+                        previousZeroCrossing = cycleEnd;
+                        onPeriods++;
+                    } else {
+                        if (currentlyOn) {
+                            waveform.push({ x: previousZeroCrossing, y: yOffset });
+                            waveform.push({ x: currentZeroCrossing, y: yOffset });
+                            currentlyOn = false;
+                        }
+
+                        if (currentZeroCrossing > previousZeroCrossing) {
+                            waveform.push({ x: previousZeroCrossing, y: yOffset });
+                            waveform.push({ x: currentZeroCrossing, y: yOffset });
+                        }
+
+                        previousZeroCrossing = currentZeroCrossing;
+                        totalPeriods++;
+                    }
+                });
+
+                if (currentlyOn) {
+                    waveform.push({ x: previousZeroCrossing, y: yOffset });
+                    waveform.push({ x: waveformLength, y: yOffset });
+                }
+
+                storedWaveforms.push({ color: ['red', 'green', 'orange', 'purple'][i], waveform });
+                powerLevels.push((onPeriods / totalPeriods) * 100);
+            }
+        }
+
+        function drawSineWave(offsetX) {
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+            const phaseShift = Math.PI;
+
+            ctx.beginPath();
+            for (let x = 0; x <= width / 2; x++) {
+                const y = amplitude * Math.sin(frequency * (x + offsetX) + phaseShift) + height / 2;
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+
+        function drawStoredWaveforms(offsetX) {
+            const centerX = width / 2;
+
+            storedWaveforms.forEach(({ color, waveform }, i) => {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                const yOffset = i * height / numChannels + height / numChannels / 2;
+
+                ctx.beginPath();
+                let isDrawing = false;
+
+                waveform.forEach(({ x, y }) => {
+                    const wrappedX = (x + offsetX + waveformLength) % waveformLength;
+
+                    if (wrappedX >= centerX && wrappedX <= centerX + waveformWidth) {
+                        if (!isDrawing) {
+                            ctx.moveTo(wrappedX, y);
+                            isDrawing = true;
+                        } else {
+                            ctx.lineTo(wrappedX, y);
+                        }
+                    } else {
+                        if (isDrawing) {
+                            ctx.stroke();
+                            isDrawing = false;
+                        }
+                    }
+                });
+
+                if (isDrawing) {
+                    ctx.stroke();
+                }
+            });
+        }
+
+        function updatePowerLevels() {
+            const powerLevelsDiv = document.getElementById('powerLevels');
+            powerLevelsDiv.innerHTML = '';
+            powerLevels.forEach((level, i) => {
+                const powerLevelText = document.createElement('div');
+                powerLevelText.textContent = `${level.toFixed(1)}%`;
+                powerLevelText.style.color = ['red', 'green', 'orange', 'purple'][i];
+                powerLevelsDiv.appendChild(powerLevelText);
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            sineWaveOffsetX -= sineWaveSpeed;
+            signalOffsetX -= signalSpeed;
+
+            if (sineWaveOffsetX <= -cycleLength) {
+                sineWaveOffsetX = 0;
+            }
+
+            if (signalOffsetX <= -waveformWidth) {
+                signalOffsetX = 0;
+            }
+
+            drawSineWave(sineWaveOffsetX);
+            drawStoredWaveforms(signalOffsetX);
+
+            updatePowerLevels();
+
+            requestAnimationFrame(animate);
+        }
+
+        generateWaveforms();
+        animate();
+    </script>
+</body>
+</html>

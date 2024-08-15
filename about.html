@@ -71,148 +71,145 @@
             color: #555;
         }
 
-
         #graphSliderContainer {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-
         #sineWaveCanvas {
-    border: 1px solid #000;
-    display: block;
-    margin-bottom: 20px; /* Space between canvas and slider */
-}
+            border: 1px solid #000;
+            display: block;
+            margin-bottom: 20px; /* Space between canvas and slider */
+        }
 
-#knobContainer {
-    margin-top: 10px; /* Space between slider and content below */
-    text-align: center; /* Center align the slider if desired */
-}
-*,
-*::after,
-*::before {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
+        #knobContainer {
+            margin-top: 10px; /* Space between slider and content below */
+            text-align: center; /* Center align the slider if desired */
+        }
 
-body {
-	min-block-size: 100vh;
-	display: grid;
-	place-content: center;
-	background: hsl(208, 12%, 72%);
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.slider-container {
-	--label: 2.75rem;
-	--width: clamp(20rem, calc(10.18rem + 43.64vw), 32rem);
-	--thumb: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
-	inline-size: var(--width);
-	aspect-ratio: 10.665 / 1;
-	display: grid;
-	position: relative;
-	padding-inline: var(--space);
-	border: 0;
-	border-radius: 100vh;
-	background: linear-gradient(
-		to right,
-		#fff9,
-		#0000,
-		hsl(203deg 21% 65%),
-		#0001,
-		#fff9
-	);
-	box-shadow: #0002 0px 2px 1px, #0001 0px 4px 2px, #0001 0px 8px 4px,
-		#0001 0px 16px 8px, #0001 0px 26px 16px;
-}
+        body {
+            min-block-size: 100vh;
+            display: grid;
+            place-content: center;
+            background: hsl(208, 12%, 72%);
+        }
 
-.number--label {
-	position: absolute;
-	top: -3rem;
-	left: -1rem;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	height: var(--label);
-	aspect-ratio: 1;
-	border-radius: 50%;
-	font-size: 1.75em;
-	transition: 366ms cubic-bezier(0.3, 0.6, 0.4, 1.125);
-	color: hsl(198deg 91% 45%);
-}
+        .slider-container {
+            --label: 2.75rem;
+            --width: clamp(20rem, calc(10.18rem + 43.64vw), 32rem);
+            --thumb: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            inline-size: var(--width);
+            aspect-ratio: 10.665 / 1;
+            display: grid;
+            position: relative;
+            padding-inline: var(--space);
+            border: 0;
+            border-radius: 100vh;
+            background: linear-gradient(
+                to right,
+                #fff9,
+                #0000,
+                hsl(203deg 21% 65%),
+                #0001,
+                #fff9
+            );
+            box-shadow: #0002 0px 2px 1px, #0001 0px 4px 2px, #0001 0px 8px 4px,
+                #0001 0px 16px 8px, #0001 0px 26px 16px;
+        }
 
-.input-slider {
-	place-self: center;
-	border-radius: 100vh;
-	width: calc(var(--width) - 1rem);
-	height: min(2rem, 4vw);
-	background-color: hsl(198deg 41% 45%);
-	box-shadow: inset 0 2px 3px #0005, inset 0 -2px 2.5px 0.5px #fff3;
-	-webkit-appearance: none;
-	appearance: none;
-	outline: none;
-}
+        .number--label {
+            position: absolute;
+            top: -3rem;
+            left: -1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--label);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            font-size: 1.75em;
+            transition: 366ms cubic-bezier(0.3, 0.6, 0.4, 1.125);
+            color: hsl(198deg 91% 45%);
+        }
 
-.input-slider::-webkit-slider-thumb {
-	background: linear-gradient(
-		to bottom,
-		#fff 30%,
-		hsl(192, 3%, 68%) 75%,
-		hsl(192deg 3% 46%)
-	);
-	border-radius: 50%;
-	width: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
-	aspect-ratio: 1;
-	-webkit-appearance: none;
-	appearance: none;
-	box-shadow: 0 -1px 5px 4px #fff7 inset, 0 1px 1.5px #0004, 0 2px 5px #0003,
-		0 5px 9px #0002;
-}
+        .input-slider {
+            place-self: center;
+            border-radius: 100vh;
+            width: calc(var(--width) - 1rem);
+            height: min(2rem, 4vw);
+            background-color: hsl(198deg 41% 45%);
+            box-shadow: inset 0 2px 3px #0005, inset 0 -2px 2.5px 0.5px #fff3;
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+        }
 
-.input-slider::-moz-range-thumb {
-	background: linear-gradient(
-		to bottom,
-		#fff 30%,
-		hsl(192, 3%, 68%) 75%,
-		hsl(192deg 3% 46%)
-	);
-	border-radius: 50%;
-	width: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
-	height: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
-	aspect-ratio: 1;
-	-webkit-appearance: none;
-	appearance: none;
-	box-shadow: 0 -1px 5px 4px #fff7 inset, 0 1px 1.5px #0004, 0 2px 5px #0003,
-		0 5px 9px #0002;
-}
+        .input-slider::-webkit-slider-thumb {
+            background: linear-gradient(
+                to bottom,
+                #fff 30%,
+                hsl(192, 3%, 68%) 75%,
+                hsl(192deg 3% 46%)
+            );
+            border-radius: 50%;
+            width: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            aspect-ratio: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 -1px 5px 4px #fff7 inset, 0 1px 1.5px #0004, 0 2px 5px #0003,
+                0 5px 9px #0002;
+        }
 
-#graphSliderContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative; /* Ensure positioning is relative for children positioning */
-}
-#spinningWheel {
-    width: 100px;
-    height: 100px;
-    border: 5px solid #ccc;
-    border-top: 5px solid #333;
-    border-radius: 50%;
-    margin-bottom: 20px; /* Space between spinning wheel and canvas */
-    animation: spin 1s linear infinite; /* Default spin animation, duration will be updated by JavaScript */
-}
+        .input-slider::-moz-range-thumb {
+            background: linear-gradient(
+                to bottom,
+                #fff 30%,
+                hsl(192, 3%, 68%) 75%,
+                hsl(192deg 3% 46%)
+            );
+            border-radius: 50%;
+            width: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            height: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            aspect-ratio: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 -1px 5px 4px #fff7 inset, 0 1px 1.5px #0004, 0 2px 5px #0003,
+                0 5px 9px #0002;
+        }
+
+        #graphSliderContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Ensure positioning is relative for children positioning */
+        }
+
+        #spinningWheel {
+            width: 100px;
+            height: 100px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #333;
+            border-radius: 50%;
+            margin-bottom: 20px; /* Space between spinning wheel and canvas */
+            animation: spin 1s linear infinite; /* Default spin animation, duration will be updated by JavaScript */
+        }
 
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         nav {
             margin-bottom: 20px;
@@ -225,20 +222,22 @@ body {
         }
 
         footer {
-    background-color: #fff;
-    color: #1c3a58;
-    text-align: center;
-    padding: 0;
-  margin-top: 0;
-    width: 100%
-  }
-  footer a {
-    color: #1c3a58;
-    text-decoration: none;
-  }
-  footer a:hover {
-    text-decoration: underline;
-  }
+            background-color: #fff;
+            color: #1c3a58;
+            text-align: center;
+            padding: 0;
+            margin-top: 0;
+            width: 100%
+        }
+
+        footer a {
+            color: #1c3a58;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
 
         @media (max-width: 768px) {
             .box {
@@ -253,7 +252,26 @@ body {
             .box-content {
                 width: 100%;
             }
+        }
 
+        .iframe-container {
+            display: block;
+            position: relative;
+            width: 30vw; /* Adjust as needed */
+            height: 45vw; /* Adjust as needed; aspect ratio 16:9 */
+            max-width: 600px; /* Optional max width */
+            min-width: 400px;
+            max-height: 562px; /* Optional max height; maintains aspect ratio */
+            
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
     </style>
 </head>
@@ -267,134 +285,134 @@ body {
             <a href="https://tsltd.github.io/product_detail.html">Our Product</a>
             <a href="https://tsltd.github.io/contact.html">Contact</a>
         </nav>
-<main>
-        <!-- Box 1 -->
-        <div class="box">
-            <video controls>
-                <source src="videos/What_Is_a_Zero_Cross_Detector.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="box-content">
-                <h3>What is a Zero Cross Detector?</h3>
-                <p>The basics of zero cross detection in under 4 minutes!</p>
-            </div>
-        </div>
-
-        <!-- Box 2 -->
-        <div class="box">
-            <img src="scope.png" alt="Image placeholder">
-            <div class="box-content">
-                <h3>Power Supply Monitoring</h3>
-                <p>A zero cross detector is essential for digitally monitoring the frequency of a power supply, and can also be used to monitor stability. The SynchroPoint zero cross detector also allows the polarity of the supply voltage to be determined at a given time.</p>
-            </div>
-        </div>
-
-        <!-- Box 3 -->
-        <div class="box">
-            <div id="graphSliderContainer">
-                <div id="spinningWheel"></div> <!-- Spinning wheel element -->
-                <canvas id="sineWaveCanvas" width="400" height="200"></canvas>
-                <div id="knobContainer">
-                    <input type="range" id="input-slider" class="input-slider" min="0" max="100" step="1" value="0">
+        <main>
+            <!-- Box 1 -->
+            <div class="box">
+                <video controls>
+                    <source src="videos/What_Is_a_Zero_Cross_Detector.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="box-content">
+                    <h3>What is a Zero Cross Detector?</h3>
+                    <p>The basics of zero cross detection in under 4 minutes!</p>
                 </div>
             </div>
-            <div class="box-content">
-                <h3>Power Control</h3>
-                <p>Combined with a microcontroller and a relay, the zero cross detector can be used to control average voltage output. This is used to modulate power, for example to control the brightness of a light, the temperature of a heater or the speed of a motor.</p>
+
+            <!-- Box 2 -->
+            <div class="box">
+                <img src="scope.png" alt="Image placeholder">
+                <div class="box-content">
+                    <h3>Power Supply Monitoring</h3>
+                    <p>A zero cross detector is essential for digitally monitoring the frequency of a power supply, and can also be used to monitor stability. The SynchroPoint zero cross detector also allows the polarity of the supply voltage to be determined at a given time.</p>
+                </div>
             </div>
-        </div>
-        <!-- Box 4 -->
-        <div class="box">
-            <img src="image-placeholder.png" alt="Image placeholder">
-            <div class="box-content">
-                <h3>Power Generation - Grid Injection</h3>
-                <p>A zero cross detector is essential when injecting generated electricity into the power grid to ensure seamless and synchronized integration. By detecting the precise moment when the grid's AC voltage crosses zero, the zero cross detector enables the synchronization of the phase, frequency, and voltage of the generated power with that of the grid. This synchronization is crucial to avoid disruptions, minimize the risk of electrical faults, and ensure that the injected power blends smoothly with the existing grid supply. Without zero cross detection, improper synchronization could lead to inefficiencies, equipment damage, or even grid instability.</p>
+
+            <!-- Box 3 -->
+            <div class="box">
+                <div id="graphSliderContainer">
+                    <div id="spinningWheel"></div> <!-- Spinning wheel element -->
+                    <canvas id="sineWaveCanvas" width="400" height="200"></canvas>
+                    <div id="knobContainer">
+                        <input type="range" id="input-slider" class="input-slider" min="0" max="100" step="1" value="0">
+                    </div>
+                </div>
+                <div class="box-content">
+                    <h3>Power Control</h3>
+                    <p>Combined with a microcontroller and a relay, the zero cross detector can be used to control average voltage output. This is used to modulate power, for example to control the brightness of a light, the temperature of a heater or the speed of a motor.</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Box 5 -->
-        <div class="box">
-            <img src="image-placeholder.png" alt="Image placeholder">
-            <div class="box-content">
-                <h3>Automation - Efficient Distribution</h3>
-                <p>A zero cross detector can enable efficient power distribution across multiple channels using integral wave burst firing methods. By ensuring precise timing when switching power at the zero-voltage point of the AC waveform, electrical noise and power loss are reduced, allowing for smooth and accurate power delivery.</p>
+            <!-- Box 4 -->
+            <div class="box">
+                <img src="image-placeholder.png" alt="Image placeholder">
+                <div class="box-content">
+                    <h3>Power Generation - Grid Injection</h3>
+                    <p>A zero cross detector is essential when injecting generated electricity into the power grid to ensure seamless and synchronized integration. By detecting the precise moment when the grid's AC voltage crosses zero, the zero cross detector enables the synchronization of the phase, frequency, and voltage of the generated power with that of the grid. This synchronization is crucial to avoid disruptions, minimize the risk of electrical faults, and ensure that the injected power blends smoothly with the existing grid supply. Without zero cross detection, improper synchronization could lead to inefficiencies, equipment damage, or even grid instability.</p>
+                </div>
             </div>
-        </div>
 
-        <a href="webpage.html" class="button-71">Back to Home</a>
-    </main>
-</div>
-<footer>
-    <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
-    <p>
-        <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
-        <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
-    </p>
-</footer> 
+            <!-- Box 5 -->
+            <div class="box">
+                <div class="iframe-container">
+                    <iframe src="/distro_animation.html" allowfullscreen></iframe>
+                </div>
+                <div class="box-content">
+                    <h3>Power Distribution</h3>
+                    <p>A zero cross detector can enable efficient and precise power distribution across multiple channels using integral wave burst firing methods. By ensuring precise timing when switching power at the zero-voltage point of the AC waveform, electrical noise and power loss are reduced, allowing for smooth and accurate power delivery. Randomizing the sequence can further minimize harmomics and EMI.</p>
+                    <a href="https://tsltd/github.io/proposal.html">Algorithmic optimization of randomized burst firing- A Proposal</a> 
+                </div>
+            </div>
 
-<script>
+            <a href="webpage.html" class="button-71">Back to Home</a>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; 2024 SynchroPoint Ltd. All rights reserved.</p>
+        <p>
+            <a href="https://synchropoint.co.uk/privacy">Privacy Policy</a> | 
+            <a href="https://synchropoint.co.uk/terms">Terms of Service</a>
+        </p>
+    </footer> 
 
+    <script>
+        const canvas = document.getElementById('sineWaveCanvas');
+        const ctx = canvas.getContext('2d');
+        const knob = document.getElementById('input-slider');
+        const spinningWheel = document.getElementById('spinningWheel');
 
-const canvas = document.getElementById('sineWaveCanvas');
-const ctx = canvas.getContext('2d');
-const knob = document.getElementById('input-slider');
-const spinningWheel = document.getElementById('spinningWheel');
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        const amplitude = 50; // Amplitude of the sine wave
+        const frequency = 5; // Frequency of the sine wave (in cycles per canvas width)
+        const squareWaveFrequency = frequency * 2;
 
-const canvasWidth = canvas.width;
-const canvasHeight = canvas.height;
-const amplitude = 50; // Amplitude of the sine wave
-const frequency = 5; // Frequency of the sine wave (in cycles per canvas width)
-const squareWaveFrequency = frequency * 2;
+        const minSpeed = 10; // Minimum speed (in seconds for one full rotation)
+        const maxSpeed = 0.1; // Maximum speed (in seconds for one full rotation)
 
-const minSpeed = 10; // Minimum speed (in seconds for one full rotation)
-const maxSpeed = 0.1; // Maximum speed (in seconds for one full rotation)
-
-function updateSpinningWheelSpeed() {
-    const value = knob.value;
-    const percent = value / 100;
-    
-    // Calculate the animation duration based on slider value
-    const speed = minSpeed - percent * (minSpeed - maxSpeed); // Linear mapping from minSpeed to maxSpeed
-    spinningWheel.style.animationDuration = `${speed}s`;
-}
-
-function drawSineWave(dutyCycle) {
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-    const sineWavePeriod = canvasWidth / frequency;
-    const squareWavePeriod = canvasWidth / squareWaveFrequency;
-
-    ctx.beginPath();
-
-    for (let x = 0; x <= canvasWidth; x++) {
-        const angle = (x / canvasWidth) * 2 * Math.PI * frequency;
-        const y = (canvasHeight / 2) + amplitude * Math.sin(angle);
-        const currentCyclePosition = x % squareWavePeriod;
-
-        if (currentCyclePosition < (dutyCycle / 100) * squareWavePeriod) {
-            ctx.lineTo(x, y);
-        } else {
-            ctx.lineTo(x, canvasHeight / 2);
+        function updateSpinningWheelSpeed() {
+            const value = knob.value;
+            const percent = value / 100;
+            
+            // Calculate the animation duration based on slider value
+            const speed = minSpeed - percent * (minSpeed - maxSpeed); // Linear mapping from minSpeed to maxSpeed
+            spinningWheel.style.animationDuration = `${speed}s`;
         }
-    }
 
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-}
+        function drawSineWave(dutyCycle) {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-function updateWave() {
-    const dutyCycle = knob.value;
-    drawSineWave(dutyCycle);
-    updateSpinningWheelSpeed();
-}
+            const sineWavePeriod = canvasWidth / frequency;
+            const squareWavePeriod = canvasWidth / squareWaveFrequency;
 
-knob.addEventListener('input', updateWave);
+            ctx.beginPath();
 
-// Initial draw and spinning wheel speed setup
-updateWave();
+            for (let x = 0; x <= canvasWidth; x++) {
+                const angle = (x / canvasWidth) * 2 * Math.PI * frequency;
+                const y = (canvasHeight / 2) + amplitude * Math.sin(angle);
+                const currentCyclePosition = x % squareWavePeriod;
 
+                if (currentCyclePosition < (dutyCycle / 100) * squareWavePeriod) {
+                    ctx.lineTo(x, y);
+                } else {
+                    ctx.lineTo(x, canvasHeight / 2);
+                }
+            }
 
-</script>
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function updateWave() {
+            const dutyCycle = knob.value;
+            drawSineWave(dutyCycle);
+            updateSpinningWheelSpeed();
+        }
+
+        knob.addEventListener('input', updateWave);
+
+        // Initial draw and spinning wheel speed setup
+        updateWave();
+    </script>
 </body>
 </html>
