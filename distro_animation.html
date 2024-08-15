@@ -6,36 +6,40 @@
     <title>Waveform Visualization Widget</title>
     <style>
           body {
-            margin: 0;
-            padding: 20px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: #fff;
-        }
-        canvas {
-            border: 1px solid black;
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        .widget-container {
-            position: relative;
-            width: 800px;
-            height: 400px;
-        }
-        .power-levels {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100%;
-            text-align: right;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-        }
+        margin: 0;
+        padding: 20px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #fff;
+    }
+    canvas {
+        border: 1px solid black;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .widget-container {
+        position: relative;
+        width: 800px;
+        height: 400px;
+    }
+    .power-levels {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100%;
+        text-align: right;
+        font-family: Arial, sans-serif;
+        font-size: 24px; /* Increase font size */
+        line-height: 1.5; /* Increase line height for vertical spacing */
+    }
+    .power-levels div {
+        margin-bottom: 60px; /* Add space between numbers */
+    }
     </style>
 </head>
 <body>
