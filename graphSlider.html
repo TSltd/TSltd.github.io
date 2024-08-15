@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Slider</title>
+    <link href="https://fonts.cdnfonts.com/css/raveparty-narrow" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #graphSliderContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Ensure positioning is relative for children positioning */
+        }
+
+        .input-slider {
+            place-self: center;
+            border-radius: 100vh;
+            width: calc(var(--width) - 1rem);
+            height: min(2rem, 4vw);
+            background-color: hsl(198deg 41% 45%);
+            box-shadow: inset 0 2px 3px #0005, inset 0 -2px 2.5px 0.5px #fff3;
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+        }
+
+        .input-slider::-webkit-slider-thumb {
+            background: linear-gradient(
+                to bottom,
+                #fff 30%,
+                hsl(192, 3%, 68%) 75%,
+                hsl(192deg 3% 46%)
+            );
+            border-radius: 50%;
+            width: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            aspect-ratio: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 -1px 5px 4px #fff7 inset, 0 1px 1.5px #0004, 0 2px 5px #0003,
+                0 5px 9px #0002;
+        }
+
+        .input-slider::-moz-range-thumb {
+            background: linear-gradient(
+                to bottom,
+                #fff 30%,
+                hsl(192, 3%, 68%) 75%,
+                hsl(192deg 3% 46%)
+            );
+            border-radius: 50%;
+            width: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            height: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            aspect-ratio: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 -1px 5px 4px #fff7 inset, 0 1px 1.5px #0004, 0 2px 5px #0003,
+                0 5px 9px #0002;
+        }
+
+        #sineWaveCanvas {
+            border: 1px solid #000;
+            display: block;
+            margin-bottom: 20px; /* Space between canvas and slider */
+        }
+
+        #knobContainer {
+            margin-top: 10px; /* Space between slider and content below */
+            text-align: center; /* Center align the slider if desired */
+        }
+
+        #spinningWheel {
+            width: 100px;
+            height: 100px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #333;
+            border-radius: 50%;
+            margin-bottom: 20px; /* Space between spinning wheel and canvas */
+            animation: spin 1s linear infinite; /* Default spin animation, duration will be updated by JavaScript */
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .input-slider {
+            border-radius: 100vh;
+            width: calc(20rem + 40vw);
+            height: min(2rem, 4vw);
+            background-color: hsl(198deg 41% 45%);
+            box-shadow: inset 0 2px 3px #0005, inset 0 -2px 2.5px 0.5px #fff3;
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+        }
+
+        .input-slider::-webkit-slider-thumb,
+        .input-slider::-moz-range-thumb {
+            background: linear-gradient(to bottom, #fff 30%, hsl(192, 3%, 68%) 75%, hsl(192deg 3% 46%));
+            border-radius: 50%;
+            width: clamp(3rem, calc(2.28rem + 3.18vw), 3.88rem);
+            aspect-ratio: 1;
+            box-shadow: 0 -1px 5px 4px #fff7 inset, 0 1px 1.5px #0004, 0 2px 5px #0003, 0 5px 9px #0002;
+        }
+    </style>
+</head>
+<body>
+    <div id="graphSliderContainer">
+        <div id="spinningWheel"></div> <!-- Spinning wheel element -->
+        <canvas id="sineWaveCanvas" width="400" height="200"></canvas>
+        <div id="knobContainer">
+            <input type="range" id="input-slider" class="input-slider" min="0" max="100" step="1" value="0">
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('sineWaveCanvas');
+        const ctx = canvas.getContext('2d');
+        const knob = document.getElementById('input-slider');
+        const spinningWheel = document.getElementById('spinningWheel');
+
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        const amplitude = 50; // Amplitude of the sine wave
+        const frequency = 5; // Frequency of the sine wave (in cycles per canvas width)
+        const squareWaveFrequency = frequency * 2;
+
+        const minSpeed = 10; // Minimum speed (in seconds for one full rotation)
+        const maxSpeed = 0.1; // Maximum speed (in seconds for one full rotation)
+
+        function updateSpinningWheelSpeed() {
+            const value = knob.value;
+            const percent = value / 100;
+            const speed = minSpeed - percent * (minSpeed - maxSpeed); // Linear mapping from minSpeed to maxSpeed
+            spinningWheel.style.animationDuration = `${speed}s`;
+        }
+
+        function drawSineWave(dutyCycle) {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            const sineWavePeriod = canvasWidth / frequency;
+            const squareWavePeriod = canvasWidth / squareWaveFrequency;
+
+            ctx.beginPath();
+
+            for (let x = 0; x <= canvasWidth; x++) {
+                const angle = (x / canvasWidth) * 2 * Math.PI * frequency;
+                const y = (canvasHeight / 2) + amplitude * Math.sin(angle);
+                const currentCyclePosition = x % squareWavePeriod;
+
+                if (currentCyclePosition < (dutyCycle / 100) * squareWavePeriod) {
+                    ctx.lineTo(x, y);
+                } else {
+                    ctx.lineTo(x, canvasHeight / 2);
+                }
+            }
+
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function updateWave() {
+            const dutyCycle = knob.value;
+            drawSineWave(dutyCycle);
+            updateSpinningWheelSpeed();
+        }
+
+        knob.addEventListener('input', updateWave);
+
+        // Initial draw and spinning wheel speed setup
+        updateWave();
+    </script>
+</body>
+</html>
