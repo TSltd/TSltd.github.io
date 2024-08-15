@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     justify-content: flex-start; /* Align content at the top */
     width: 100%;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     min-height: 100vh; /* Changed height to min-height */
 }
@@ -16,12 +16,13 @@ body {
 .container {
     text-align: center;
     background-color: #fff;
-    padding: 40px;
+    padding: 0px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
     
-    margin: 20px auto;
     margin-top: 0px;
+
 }
 
 h1 {
@@ -236,7 +237,8 @@ img {
     color: #1c3a58;
     text-align: center;
     padding: 1em;
-    margin-top: 2em;
+    margin-top: 0;
+    width: 100%;
   }
   footer a {
     color: #1c3a58;
