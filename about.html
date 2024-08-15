@@ -16,6 +16,7 @@
             flex-direction: column;
             justify-content: center;
             background-color: #f4f4f4;
+            width: 100%;
         }
 
         .container {
@@ -28,8 +29,8 @@
         .box {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 90%;
+            justify-content: space-around;
+            width: 100%;
             margin: 40px auto;
             padding: 40px;
             border-radius: 20px;
@@ -257,11 +258,13 @@
         .iframe-container {
             display: block;
             position: relative;
-            width: 30vw; /* Adjust as needed */
+            width: 40vw; /* Adjust as needed */
             height: 45vw; /* Adjust as needed; aspect ratio 16:9 */
             max-width: 600px; /* Optional max width */
             min-width: 400px;
             max-height: 562px; /* Optional max height; maintains aspect ratio */
+            margin: 40px;
+            border: 20px;
             
         }
 
@@ -324,7 +327,9 @@
 
             <!-- Box 4 -->
             <div class="box">
-                <img src="image-placeholder.png" alt="Image placeholder">
+                <div class="iframe-container">
+                    <iframe src="/turbines.html" allowfullscreen></iframe>
+                </div>
                 <div class="box-content">
                     <h3>Power Generation - Grid Injection</h3>
                     <p>A zero cross detector is essential when injecting generated electricity into the power grid to ensure seamless and synchronized integration. By detecting the precise moment when the grid's AC voltage crosses zero, the zero cross detector enables the synchronization of the phase, frequency, and voltage of the generated power with that of the grid. This synchronization is crucial to avoid disruptions, minimize the risk of electrical faults, and ensure that the injected power blends smoothly with the existing grid supply. Without zero cross detection, improper synchronization could lead to inefficiencies, equipment damage, or even grid instability.</p>
