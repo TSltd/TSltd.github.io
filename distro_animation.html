@@ -5,41 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waveform Visualization Widget</title>
     <style>
-          body {
-        margin: 0;
-        padding: 20px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: #fff;
-    }
-    canvas {
-        border: 1px solid black;
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-    .widget-container {
-        position: relative;
-        width: 800px;
-        height: 400px;
-    }
-    .power-levels {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100px;
-        height: 100%;
-        text-align: right;
-        font-family: Arial, sans-serif;
-        font-size: 24px; /* Increase font size */
-        line-height: 1.5; /* Increase line height for vertical spacing */
-    }
-    .power-levels div {
-        margin-bottom: 60px; /* Add space between numbers */
-    }
+        body {
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #fff;
+        }
+        canvas {
+            border: 1px solid black;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .widget-container {
+            position: relative;
+            width: 800px;
+            height: 400px;
+        }
+        .power-levels {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            text-align: right;
+            font-family: Arial, sans-serif;
+            font-size: 24px; /* Increase font size */
+            line-height: 1.5; /* Increase line height for vertical spacing */
+        }
+        .power-levels div {
+            margin-bottom: 64px; /* Add space between numbers */
+        }
     </style>
 </head>
 <body>
@@ -67,7 +67,7 @@
 
         let storedWaveforms = [];
         let powerLevels = [];
-        const waveformLength = width + waveformWidth;
+        const waveformLength = width + waveformWidth; // Original waveform length
 
         function generateWaveforms() {
             storedWaveforms = [];
@@ -78,7 +78,8 @@
             let channelStatesArray = [];
             let previousY = Math.sin(frequency * (0 - width / 2));
 
-            for (let x = 0; x <= waveformLength; x++) {
+            // Generate zero-crossings and patterns
+            for (let x = 0; x <= 2 * waveformLength; x++) { // Double the pattern length
                 const y = Math.sin(frequency * (x - width / 2));
                 if (previousY <= 0 && y > 0) {
                     zeroCrossings.push(x);
@@ -91,6 +92,7 @@
                 previousY = y;
             }
 
+            // Generate waveforms for each channel
             for (let i = 0; i < numChannels; i++) {
                 const yOffset = i * channelHeight + channelHeight / 2;
                 const waveform = [];
@@ -101,7 +103,7 @@
                 let totalPeriods = 0;
 
                 zeroCrossings.forEach((currentZeroCrossing, index) => {
-                    const nextZeroCrossing = zeroCrossings[index + 1] || waveformLength;
+                    const nextZeroCrossing = zeroCrossings[index + 1] || 2 * waveformLength; // Adjust for doubled length
                     const channelStates = channelStatesArray[index];
 
                     if (channelStates[i]) {
@@ -141,7 +143,7 @@
 
                 if (currentlyOn) {
                     waveform.push({ x: previousZeroCrossing, y: yOffset });
-                    waveform.push({ x: waveformLength, y: yOffset });
+                    waveform.push({ x: 2 * waveformLength, y: yOffset });
                 }
 
                 storedWaveforms.push({ color: ['red', 'green', 'orange', 'purple'][i], waveform });
@@ -178,7 +180,7 @@
                 let isDrawing = false;
 
                 waveform.forEach(({ x, y }) => {
-                    const wrappedX = (x + offsetX + waveformLength) % waveformLength;
+                    const wrappedX = (x + offsetX + 2 * waveformLength) % (2 * waveformLength);
 
                     if (wrappedX >= centerX && wrappedX <= centerX + waveformWidth) {
                         if (!isDrawing) {
