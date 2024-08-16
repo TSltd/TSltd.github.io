@@ -60,7 +60,7 @@
             border-top: 5px solid #333;
             border-radius: 50%;
             margin-bottom: 20px;
-            animation: spin 1s linear infinite;
+            animation: spin 10s linear infinite;
         }
 
         .spoke {
@@ -81,6 +81,12 @@
                 transform: rotate(360deg);
             }
         }
+
+        #sliderValue {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +105,7 @@
         <canvas id="sineWaveCanvas" width="400" height="200"></canvas>
         <div id="knobContainer">
             <input type="range" id="input-slider" class="input-slider" min="0" max="100" step="1" value="0">
+            <div id="sliderValue">Value: 0, 0%</div>
         </div>
     </div>
 
@@ -107,6 +114,7 @@
         const ctx = canvas.getContext('2d');
         const knob = document.getElementById('input-slider');
         const spinningWheel = document.getElementById('spinningWheel');
+        const sliderValue = document.getElementById('sliderValue');
 
         const canvasWidth = canvas.width;
         const canvasHeight = canvas.height;
@@ -114,18 +122,15 @@
         const frequency = 5; // Frequency of the sine wave (in cycles per canvas width)
         const squareWaveFrequency = frequency * 2;
 
-        const minSpeed = 5; // Duration for one full rotation at full speed (fastest)
-        const maxSpeed = 1; // Duration for one full rotation at slowest (effectively stationary)
+        // Constants for RPM calculation
+        const maxRPM = 10; // Maximum RPM value
+        const minRPM = 0;  // Minimum RPM value
 
         function updateSpinningWheelSpeed() {
             const value = knob.value;
-            const percent = value / 100;
-
-            // Map the slider value to a speed range
-            const speed = minSpeed - (percent * (minSpeed - maxSpeed));
-
-            // Set the animation duration; when speed is very low, it should be large to effectively stop
-            spinningWheel.style.animationDuration = `${speed}s`;
+            const rpm = minRPM + (value / 100) * (maxRPM - minRPM);
+            const duration = 10 / rpm; // Duration in seconds for one full rotation
+            spinningWheel.style.animationDuration = `${duration}s`;
         }
 
         function drawSineWave(dutyCycle) {
@@ -154,7 +159,10 @@
         }
 
         function updateWave() {
-            const dutyCycle = knob.value;
+            const value = knob.value;
+            const dutyCycle = value;
+            
+            sliderValue.textContent = `Power Level: ${value} %`;
             drawSineWave(dutyCycle);
             updateSpinningWheelSpeed();
         }
